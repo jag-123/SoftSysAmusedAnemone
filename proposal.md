@@ -18,7 +18,7 @@
   - https://www.youtube.com/watch?v=_OAYRV5fjuE
 
 - Learning C++ (for Jeremy and Emma). Though Carl and Cleophas know a fair amount of C++, Jeremy and Emma are coming in as beginners. These resources will primarily be used for getting them up to speed with the rest:
- - https://www.tutorialspoint.com/cplusplus/
+  - https://www.tutorialspoint.com/cplusplus/
 
 
 ## Tasks - Trello Board
@@ -26,12 +26,12 @@
 - [Trello Board](https://trello.com/b/KTYQjMuP/softsys17-amused-anemone)
 
 - Our planned tasks for the first sprint follow the order of:
- - Learn C++
- - Learn OpenGL
- - Create a single pipe
- - Build the pipe across the screen
- - Build the pipe in 2-dimensions
- - Work on preventing collisions with the pipe
+   - Learn C++
+   - Learn OpenGL
+   - Create a single pipe
+   - Build the pipe across the screen
+   - Build the pipe in 2-dimensions
+   - Work on preventing collisions with the pipe
 
 ## Possible Roadblocks
 
