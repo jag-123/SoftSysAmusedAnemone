@@ -11,12 +11,11 @@
 
 ## Resources - Annotated Bibliography
 - Opengl tutorials for beginners. WIll be helpful for understanding the intricacies of OpenGL. These will first be used for comprehending graphics tutorials and later, once we understand enough concepts they will be helpful for our own implementation: 
-
- - http://www.opengl-tutorial.org/beginners-tutorials/tutorial-1-opening-a-window/
- - https://open.gl/introduction
- - http://lazyfoo.net/tutorials/OpenGL/index.php 
- - https://www.youtube.com/playlist?list=PL2E88A9FE78FBF3B8
- - https://www.youtube.com/watch?v=_OAYRV5fjuE
+  - http://www.opengl-tutorial.org/beginners-tutorials/tutorial-1-opening-a-window/
+  - https://open.gl/introduction
+  - http://lazyfoo.net/tutorials/OpenGL/index.php 
+  - https://www.youtube.com/playlist?list=PL2E88A9FE78FBF3B8
+  - https://www.youtube.com/watch?v=_OAYRV5fjuE
 
 - Learning C++ (for Jeremy and Emma). Though Carl and Cleophas know a fair amount of C++, Jeremy and Emma are coming in as beginners. These resources will primarily be used for getting them up to speed with the rest:
  - https://www.tutorialspoint.com/cplusplus/
