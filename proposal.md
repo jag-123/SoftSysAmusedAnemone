@@ -1,6 +1,6 @@
 # Pipe Screen Saver - Amused Anemones
 
-### Carl Moser, Cleophas Kalekem, Emma Price, Jeremy Garcia
+#### Carl Moser, Cleophas Kalekem, Emma Price, Jeremy Garcia
 
 ## Goal
 
