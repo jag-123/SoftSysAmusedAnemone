@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <GL/glut.h>
 #include <math.h>
+#include "cylinder.h"
 
 #ifdef __APPLE__
 #include <OpenGL/gl.h>
@@ -14,9 +15,21 @@
 #endif
 
 #define PI 3.1415927
-/* To compile the program run:
-        g++ -o cylinder cylinder.cpp -lglut -lGLU -lGL -lm && ./cylinder 
-*/
+
+int main(int argc, char **argv) {
+    /** Initialize glut */
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(640,480); //set the window size
+    glutCreateWindow("A Cylinder");
+    glClearColor(0.0,0.0,0.0,0.8);
+    glutDisplayFunc(display);
+    glutReshapeFunc(reshape);
+
+    glutMainLoop(); //start the main loop. It doesn't return S
+
+    return 0;
+}
 
 /*
 *draw_cylinder() function draws the cylinder
@@ -107,19 +120,4 @@ void reshape(int width, int height) {
     //specifies the lower left corner of the viewport rectangle, in pixels. 
     //The initial value is (0,0)
     glViewport(0, 0, width, height); //width and height are the set values for the window width and height 
-}
-
-int main(int argc, char **argv) {
-    /** Initialize glut */
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-    glutInitWindowSize(640,480); //set the window size
-    glutCreateWindow("A Cylinder");
-    glClearColor(0.0,0.0,0.0,0.8);
-    glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
-
-    glutMainLoop(); //start the main loop. It doesn't return S
-
-    return 0;
 }

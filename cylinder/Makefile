@@ -1,2 +1,2 @@
 cylinder.o: cylinder.cpp
-	g++ cylinder.cpp -o cylinder.o -lglut -lGL -lGLU
+	g++ cylinder.cpp -o cylinder.o -lglut -lGL -lGLU -lm
