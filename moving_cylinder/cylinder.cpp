@@ -57,7 +57,7 @@ void draw_cylinder(GLfloat radius, GLfloat height, GLubyte R, GLubyte G, GLubyte
         glVertex3f(radius, 0.0, 0.0);
     glEnd();
 
-    /** Draw the circle on top of the cylinder */
+    // /** Draw the circle on top of the cylinder */
     glColor3ub(152,155,114); //sets the color for the circle - R, G, B
     glBegin(GL_POLYGON);
     angle = 0.0;
@@ -86,6 +86,9 @@ void display(void) {
     //the first two params are for radius and height.
     //The last three are for setting the color of the cylinder
     draw_cylinder(0.04, 1.0, 250, 200, 200);
+
+    glTranslatef(-1,0.3,-16.0); //translates the figure in x, y, z directions
+
     draw_cylinder(0.04, 1.0, 150, 100, 100);
 
 

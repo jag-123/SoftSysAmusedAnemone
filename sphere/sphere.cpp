@@ -2,22 +2,29 @@
 #include <stdlib.h>
 #include <GL/glut.h>
 #include <math.h>
-#include "cylinder.h"
 
+GLfloat xRotated, yRotated, zRotated;
+GLdouble radius=1;
 #define PI 3.1415927
 
-int main(int argc, char **argv) {
-    /** Initialize glut */
+
+void display(void);
+void reshape(int x, int y);
+
+
+int main (int argc, char **argv)
+{
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-    glutInitWindowSize(640,480); //set the window size
-    glutCreateWindow("A Cylinder");
+    glutInitWindowSize(640,480);
+    glutCreateWindow("Solid Sphere");
     glClearColor(0.0,0.0,0.0,0.8);
+    xRotated = yRotated = zRotated = 30.0;
+    xRotated=43;
+    yRotated=50;
+
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
-
-    glutMainLoop(); //start the main loop. It doesn't return S
-
+    glutMainLoop();
     return 0;
 }
 
@@ -72,44 +79,41 @@ void draw_cylinder(GLfloat radius, GLfloat height, GLubyte R, GLubyte G, GLubyte
 
 }
 
-/**
-*display() function - draws the figure on the screen
-*/
-void display(void) {
 
+void display(void)
+{
+
+    glMatrixMode(GL_MODELVIEW);
+    // clear the drawing buffer.
     glClear(GL_COLOR_BUFFER_BIT);
+    // clear the identity matrix.
     glLoadIdentity();
-
-    glTranslatef(-0.5,0.0,-8.0); //translates the figure in x, y, z directions
-    glRotatef(80, 80.0, 80.0, 80.0); //rotates the cylinder according to the specified values
+    // traslate the draw by z = -4.0
+    // Note this when you decrease z like -8.0 the drawing will looks far , or smaller.
+    glTranslatef(-0.5,0.0,-8.0);
+    //rotates the cylinder according to the specified values
+    glRotatef(80, 80.0, 80.0, 80.0);
+    // // scaling transfomation
+    // glScalef(1.0,1.0,1.0);
+    // built-in (glut library) function , draw you a sphere.
+    glutSolidSphere(radius,20,20);
+    // Flush buffers to screen
 
     //the first two params are for radius and height.
     //The last three are for setting the color of the cylinder
     draw_cylinder(0.04, 1.0, 250, 200, 200);
-    draw_cylinder(0.04, 1.0, 150, 100, 100);
-
 
     glFlush();
+    // sawp buffers called because we are using double buffering
+   // glutSwapBuffers();
 }
 
-/*
-*params: windows width and height
-*Responsible for resizing the window size as specified by the user
-*/
-void reshape(int width, int height) {
-    if (width == 0 || height == 0){
-        return;
-    }
-
-    //GL_PROJECTION - Applies subsequent matrix operations to the projection matrix stack.
+void reshape(int x, int y)
+{
+    if (y == 0 || x == 0) return;
     glMatrixMode(GL_PROJECTION);
-    //glLoadIdentity — replaces the current matrix with the identity matrix
     glLoadIdentity();
-    //gluPerspective zooms in or out the object. Smaller values zooms it in, larger values zooms out
-    gluPerspective(10.0, (GLdouble)width/(GLdouble)height,0.5, 20.0);
-    glMatrixMode(GL_MODELVIEW); //GL_MODELVIEW- Applies subsequent matrix operations to the modelview matrix stack.
-    //glViewport — sets the viewport
-    //specifies the lower left corner of the viewport rectangle, in pixels.
-    //The initial value is (0,0)
-    glViewport(0, 0, width, height); //width and height are the set values for the window width and height
+    gluPerspective(39.0,(GLdouble)x/(GLdouble)y,0.6,21.0);
+    glMatrixMode(GL_MODELVIEW);
+    glViewport(0,0,x,y);  //Use the whole window for rendering
 }
