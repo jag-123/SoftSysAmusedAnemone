@@ -33,7 +33,7 @@ int ends[NENDS][2];       /* array of 2D points */
 
 /* Program initialization NOT OpenGL/GLUT dependent,
    as we haven't created a GLUT window yet */
-void init(void){}
+void init(void){
   width  = 1280.0;                 /* initial window width and height, */
   height = 800.0;                  /* within which we draw. */
   ends[0][0] = (int)(0.25*width);  /* (0,0) is the lower left corner */
