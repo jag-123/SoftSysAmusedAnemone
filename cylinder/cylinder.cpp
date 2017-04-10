@@ -40,6 +40,7 @@ void draw_cylinder(GLfloat radius, GLfloat height, GLubyte R, GLubyte G, GLubyte
     GLfloat y = 0.0;
     GLfloat angle = 0.0;
     GLfloat angle_stepsize = 0.05;
+    GLfloat radius = 0.07;
 
     /** Draw the tube */
     glColor3ub(240,255,14); //sets the color for the tube - R, G, B
@@ -86,7 +87,6 @@ void display(void) {
     //the first two params are for radius and height.
     //The last three are for setting the color of the cylinder
     draw_cylinder(0.04, 1.0, 250, 200, 200);
-    draw_cylinder(0.04, 1.0, 150, 100, 100);
 
 
     glFlush();
