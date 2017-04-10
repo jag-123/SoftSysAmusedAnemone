@@ -6,7 +6,7 @@ Create a simple screensaver in C++ using OpenGL. We are planning to use the [pip
 Create one single pipe that moves across the screen in 2-dimensions without running into itself.
 ### Stretch
 Have multiple pipes that move around the screen in 3-dimensions without running into each other. The first step will be to create the pipes at different start times and after that we will try to create multiple pipes at once.
-### Results
+## Results
 The following is a link to a demo video of a 2-d pipe growing in a terminal window. 
 https://github.com/jag-123/SoftSysAmusedAnemone/blob/master/videos/sprint1_video.mp4
 
@@ -39,15 +39,15 @@ Coming into this sprint, Jeremy and Emma did not have any experience with C++. W
 - Work on a C++ Tutorial
   - This card does not have a clear deliverable like the others, but it does still have a clear end. Because the “learning” cards were only used in this Sprint, we will not be running into the issue of cards with no deliverables again.
 - Work on an OpenGL Tutorial
-  -This card is similar to the above one.
+  - This card is similar to the above one.
 - Create a single cylinder
-  - Refer to (this folder)[https://github.com/jag-123/SoftSysAmusedAnemone/tree/master/cylinder]
+  - Refer to [this folder](https://github.com/jag-123/SoftSysAmusedAnemone/tree/master/cylinder)
 - Build the pipe across the screen
-  - Refer to (this folder)[https://github.com/jag-123/SoftSysAmusedAnemone/tree/master/EmmaTest/PipeGrowth]
+  - Refer to [this folder](https://github.com/jag-123/SoftSysAmusedAnemone/tree/master/EmmaTest/PipeGrowth)
 - Make the pipe turn in two dimensions
-  - Refer to (this folder)[https://github.com/jag-123/SoftSysAmusedAnemone/tree/master/Pipe]
+  - Refer to [this folder](https://github.com/jag-123/SoftSysAmusedAnemone/tree/master/Pipe)
 - Work on preventing collisions with the pipe
-  - Right now we have some collision prevention, but it is not working correctly yet. The pipe know when it has hit the wall, but it is not turning yet. It is also in the pipe folder (here)[https://github.com/jag-123/SoftSysAmusedAnemone/tree/master/Pipe].
+  - Right now we have some collision prevention, but it is not working correctly yet. The pipe know when it has hit the wall, but it is not turning yet. It is also in the pipe folder [here](https://github.com/jag-123/SoftSysAmusedAnemone/tree/master/Pipe).
 
 ## Possible Roadblocks
 
