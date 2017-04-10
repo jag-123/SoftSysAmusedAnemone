@@ -10,8 +10,8 @@ Have multiple pipes that move around the screen in 3-dimensions without running 
 The following is a link to a demo video of a 2-d pipe growing in a terminal window. 
 https://github.com/jag-123/SoftSysAmusedAnemone/blob/master/videos/sprint1_video.mp4
 
-### Resources - Annotated Bibliography
-## OpenGL:
+## Resources - Annotated Bibliography
+### OpenGL:
 To better understand OpenGL we all completed various tutorials that walked through the major aspects of OpenGL and some of the functions that are used in every program. Once we understood the basics, we began to implement some heavily commented test code that allowed us to look fully understand the less-used OpenGL functions that we working with. 
 
 - http://www.opengl-tutorial.org/beginners-tutorials/tutorial-1-opening-a-window/
@@ -23,7 +23,7 @@ To better understand OpenGL we all completed various tutorials that walked throu
 Coming up we will continue to look through OpenGL tutorials and sample code as well as documentation. Hopefully this will allow us to use some of the features that make OpenGL so helpful, like vertex buffer objects. Hopefully we have enough understanding now to work with the OpenGL documentation.
 - https://www.opengl.org/documentation/
 
-## C++:
+### C++:
 
 Coming into this sprint, Jeremy and Emma did not have any experience with C++. When they encountered something they did not understand, they primarily referred to TutorialsPoint or StackOverflow. Most of the code that we have worked with so far has been mostly within the OpenGL library, and did not rely on C++ as much so it has not been too challenging yet. 
 - https://www.tutorialspoint.com/cplusplus/
