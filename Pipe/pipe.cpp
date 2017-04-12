@@ -3,47 +3,48 @@
 #include <GL/glut.h>
 #include <unistd.h>
 #include <iostream>
+#include "pipe.h"
 using namespace std;
 
-// A macro for unused variables (to bypass those pesky G++ warnings)
-#define UNUSED(param) (void)(param)
+int main(int argc, char** argv){
 
-char title[] = "OpenGL Pipe";
+    //Initializing variables
+    title = "OpenGL Pipe";
+    map_half_length = 28.0f;
+    direction = 2;
+    move_speed = 300;
+    moved = false;
+    growth_stage = 0;
+    growth = 2;
 
-float map_half_length = 28.0f;
+    //Init glut
+    glutInit(&argc, argv);
 
-int direction = 2;
-int move_speed = 300;
-bool moved = false;
-std::deque<std::deque<float> > part_coords;
+    glutInitWindowSize(600, 600);
+    glutCreateWindow(title);
 
-int growth_stage = 0;
-int growth = 2;
+    //Set the glut functions
+    glutDisplayFunc(display);
+    glutReshapeFunc(reshape);
+    glutTimerFunc(move_speed, moveSnakeAuto, 0);
 
-void turn();
+    int initSize = 3;
 
-void display(){
-    glClear(GL_COLOR_BUFFER_BIT);
-    glMatrixMode(GL_MODELVIEW);
+    // Specify the coordinates to each part of the snake
+    for(int a = 1; a <= initSize; a++){
+        std::deque<float> row;
+        row.push_back(0.0f);
+        row.push_back((map_half_length + 2.0f + (initSize * 2)) - (a * 2));
 
-    // The vertex order is clockwise
-    // The side order is front, back, left, right, top, bottom (if applicable)
-
-    // Loop over snake size and draw each part at it's respective coordinates
-    for(unsigned int a = 0; a < part_coords.size(); a++){
-        glLoadIdentity();
-        glTranslatef(part_coords[a][0], part_coords[a][1], -40.0f);
-        glColor3f(1.0f, 0.0f, 1.0f);
-
-        glBegin(GL_POLYGON);
-            glVertex2d( 1.0f,  1.0f);
-            glVertex2d( 1.0f, -1.0f);
-            glVertex2d(-1.0f, -1.0f);
-            glVertex2d(-1.0f,  1.0f);
-        glEnd();
+        part_coords.push_front(row);
     }
 
-    glutSwapBuffers();
+    srand(time(NULL));
+
+    initGL();
+    glutMainLoop();
+
+    return 0;
 }
 
 int randNum(){
@@ -55,7 +56,7 @@ void moveSnake(int new_direction){
     direction = new_direction;
 
     int last_part = part_coords.size() - 1;
-    std::deque<float> new_head = part_coords[last_part];
+    deque<float> new_head = part_coords[last_part];
 
     float deltaX = 0.0;
     float deltaY = 0.0;
@@ -132,12 +133,6 @@ void turn(){
     glutPostRedisplay();
 }
 
-void initGL(){
-    glMatrixMode(GL_PROJECTION);
-    gluPerspective(75.0f, 1, 0.0f, 35.0f);
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-}
-
 void moveSnakeAuto(int value){
     int check = randNum();
     if (check % 7 == 0){
@@ -164,6 +159,12 @@ void moveSnakeAuto(int value){
     glutTimerFunc(move_speed, moveSnakeAuto, 0);
 }
 
+void initGL(){
+    glMatrixMode(GL_PROJECTION);
+    gluPerspective(75.0f, 1, 0.0f, 35.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+}
+
 void reshape(GLsizei width, GLsizei height){
     UNUSED(width);
     UNUSED(height);
@@ -172,31 +173,26 @@ void reshape(GLsizei width, GLsizei height){
     glutReshapeWindow(600, 600);
 }
 
-int main(int argc, char** argv){
-    glutInit(&argc, argv);
+void display(){
+    glClear(GL_COLOR_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
 
-    glutInitWindowSize(600, 600);
-    glutCreateWindow(title);
+    // The vertex order is clockwise
+    // The side order is front, back, left, right, top, bottom (if applicable)
 
-    glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
-    glutTimerFunc(move_speed, moveSnakeAuto, 0);
+    // Loop over snake size and draw each part at it's respective coordinates
+    for(unsigned int a = 0; a < part_coords.size(); a++){
+        glLoadIdentity();
+        glTranslatef(part_coords[a][0], part_coords[a][1], -40.0f);
+        glColor3f(1.0f, 0.0f, 1.0f);
 
-    int initSize = 3;
-
-    // Specify the coordinates to each part of the snake
-    for(int a = 1; a <= initSize; a++){
-        std::deque<float> row;
-        row.push_back(0.0f);
-        row.push_back((map_half_length + 2.0f + (initSize * 2)) - (a * 2));
-
-        part_coords.push_front(row);
+        glBegin(GL_POLYGON);
+            glVertex2d( 1.0f,  1.0f);
+            glVertex2d( 1.0f, -1.0f);
+            glVertex2d(-1.0f, -1.0f);
+            glVertex2d(-1.0f,  1.0f);
+        glEnd();
     }
 
-    srand(time(NULL));
-
-    initGL();
-    glutMainLoop();
-
-    return 0;
+    glutSwapBuffers();
 }
