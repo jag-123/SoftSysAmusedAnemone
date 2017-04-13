@@ -9,8 +9,8 @@ using namespace std;
 
 // A macro for unused variables (to bypass those pesky G++ warnings)
 #define UNUSED(param) (void)(param)
-#define HEIGHT 28
-#define WIDTH 40
+#define HEIGHT 59
+#define WIDTH 59
 
 deque<deque<float> > part_coords;
 vector<int> directions;

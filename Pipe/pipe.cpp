@@ -42,7 +42,7 @@ int main(int argc, char** argv){
     }
 
     srand(time(NULL));
-
+    constructMap();
     initGL();
     glutMainLoop();
 
@@ -59,6 +59,7 @@ void moveSnake(int new_direction){
 
     int last_part = part_coords.size() - 1;
     deque<float> new_head = part_coords[last_part];
+    std::cout<< "x: " << part_coords[0][0] << " y: " <<  part_coords[0][1] << std::endl;
 
     float deltaX = 0.0;
     float deltaY = 0.0;
@@ -180,7 +181,7 @@ void grow(int value){
     int last_part = part_coords.size() - 1;
     deque<float> new_head = part_coords[last_part];
 
-    
+
 
     //Reset if no valid directions
     if(directions.empty()){
@@ -207,7 +208,22 @@ void reset(){
 }
 
 void constructMap(){
-
+    /*
+        Constructs the map with walls being 1 and all other space 0
+    */
+    for(int row=0; row<HEIGHT+2; row++){
+        for(int col=0; col<WIDTH+2; col++){
+            if(row==0 || col==0){
+                map[row][col] = 1;
+            }
+            else if(row==HEIGHT+1 || col==WIDTH+1){
+                map[row][col] = 1;
+            }
+            else{
+                map[row][col] = 0;
+            }
+        }
+    }
 }
 
 void initGL(){
