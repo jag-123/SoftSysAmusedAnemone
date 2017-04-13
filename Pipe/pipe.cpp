@@ -3,6 +3,7 @@
 #include <GL/glut.h>
 #include <unistd.h>
 #include <iostream>
+#include <algorithm>
 #include "pipe.h"
 using namespace std;
 
@@ -22,6 +23,7 @@ int main(int argc, char** argv){
 
     glutInitWindowSize(600, 600);
     glutCreateWindow(title);
+
 
     //Set the glut functions
     glutDisplayFunc(display);
@@ -157,6 +159,55 @@ void moveSnakeAuto(int value){
         moved = false;
     }
     glutTimerFunc(move_speed, moveSnakeAuto, 0);
+}
+
+void grow(int value){
+    /*
+        Directions:
+        1 - up
+        2 - down
+        3 - right
+        4 - left
+    */
+    UNUSED(value);
+
+    //Add all possible directions
+    for(int i=1; i<5; i++){
+        directions.push_back(i);
+    }
+
+    //Get the last coordinates
+    int last_part = part_coords.size() - 1;
+    deque<float> new_head = part_coords[last_part];
+
+    
+
+    //Reset if no valid directions
+    if(directions.empty()){
+        reset();
+        return;
+    }
+
+    //Choose direction to move out of valid directions
+    int direction = rand()%directions.size();
+
+
+    //Change the coordinates
+    new_head[0] = part_coords[0][0];
+    new_head[1] = part_coords[0][1];
+
+    //Push the new head onto the coords
+    part_coords.push_back(new_head);
+
+}
+
+void reset(){
+    constructMap();
+    glutTimerFunc(move_speed, grow, 0);
+}
+
+void constructMap(){
+
 }
 
 void initGL(){
