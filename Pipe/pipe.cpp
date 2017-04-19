@@ -11,17 +11,17 @@ int main(int argc, char** argv){
 
     //Initializing variables
     title = "OpenGL Pipe";
-    map_half_length = 28.0f;
+    map_half_length = 14.0f;
     direction = 2;
     move_speed = 30;
     moved = false;
     growth_stage = 0;
-    growth = 2;
+    last_direction = 2;
 
     //Init glut
     glutInit(&argc, argv);
 
-    glutInitWindowSize(650, 650);
+    glutInitWindowSize(600, 600);
     glutCreateWindow(title);
 
 
@@ -30,16 +30,9 @@ int main(int argc, char** argv){
     glutReshapeFunc(reshape);
     glutTimerFunc(move_speed, grow, 0);
 
-    int initSize = 3;
-
-    // Specify the coordinates to each part of the snake
-    /*for(int a = 1; a <= initSize; a++){
-        std::deque<float> row;
-        row.push_back(0.0f);
-        row.push_back((map_half_length + 2.0f + (initSize * 2)) - (a * 2));
-
-        part_coords.push_front(row);
-    }*/
+    red = rand()%255;
+    green =rand()%255;
+    blue =rand()%255;
 
     std::deque<float> row;
     int x = rand()%(int)(map_half_length*2);
@@ -94,26 +87,38 @@ void grow(int value){
     }
 
     for(int n:directions){
-        //std::cout<<n<< "  ";
+        if(n == last_direction){
+            for(int i=0; i<10; i++){
+                directions.push_back(last_direction);
+            }
+        }
     }
+
+    // for(int n:directions){
+    //     //std::cout<<n<< "  ";
+    // }
     //std::cout<<std::endl;
 
     //Choose direction to move out of valid directions
     int direction = directions.at(rand()%directions.size());
 
     if(direction==1){
+        last_direction = 1;
         new_head[0] = new_head[0];
         new_head[1] = new_head[1]+1;
     }
     else if(direction==2){
+        last_direction = 2;
         new_head[0] = new_head[0];
         new_head[1] = new_head[1]-1;
     }
     else if(direction==3){
+        last_direction = 3;
         new_head[0] = new_head[0]+1;
         new_head[1] = new_head[1];
     }
     else if(direction==4){
+        last_direction = 4;
         new_head[0] = new_head[0]-1;
         new_head[1] = new_head[1];
     }
@@ -143,6 +148,10 @@ void reset(){
     map[x+1][y+1]=1;
 
     part_coords.push_back(row);
+
+    red = rand()%255;
+    green =rand()%255;
+    blue =rand()%255;
 
     glutTimerFunc(move_speed, grow, 0);
 }
@@ -189,7 +198,7 @@ void reshape(GLsizei width, GLsizei height){
     UNUSED(height);
 
     // Make the window non-resizable so we don't have to worry about size changes
-    glutReshapeWindow(650, 650);
+    glutReshapeWindow(600, 600);
 }
 
 void display(){
@@ -200,16 +209,19 @@ void display(){
     // The side order is front, back, left, right, top, bottom (if applicable)
 
     // Loop over snake size and draw each part at it's respective coordinates
+
+    
     for(unsigned int a = 0; a < part_coords.size(); a++){
         glLoadIdentity();
-        glTranslatef(part_coords[a][0], part_coords[a][1], -40.0f);
-        glColor3f(1.0f, 0.0f, 1.0f);
+        glTranslatef(part_coords[a][1]-30, -part_coords[a][0]+30, -40.0f);
+
+        glColor3ub(red, green, blue);
 
         glBegin(GL_POLYGON);
-            glVertex2d( 1.0f,  1.0f);
-            glVertex2d( 1.0f, -1.0f);
-            glVertex2d(-1.0f, -1.0f);
-            glVertex2d(-1.0f,  1.0f);
+            glVertex2d( 0.5f,  0.5f);
+            glVertex2d( 0.5f, -0.5f);
+            glVertex2d(-0.5f, -0.5f);
+            glVertex2d(-0.5f,  0.5f);
         glEnd();
     }
 
