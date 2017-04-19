@@ -28,10 +28,7 @@ int growth;
 void grow(int value);
 void reset();
 void constructMap();
-void turn();
-int randNum();
-void moveSnake(int new_direction);
-void moveSnakeAuto(int value);
+void printMap();
 
 //Opengl functions
 void initGL();

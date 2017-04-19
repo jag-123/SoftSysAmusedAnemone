@@ -13,7 +13,7 @@ int main(int argc, char** argv){
     title = "OpenGL Pipe";
     map_half_length = 28.0f;
     direction = 2;
-    move_speed = 300;
+    move_speed = 30;
     moved = false;
     growth_stage = 0;
     growth = 2;
@@ -21,25 +21,34 @@ int main(int argc, char** argv){
     //Init glut
     glutInit(&argc, argv);
 
-    glutInitWindowSize(600, 600);
+    glutInitWindowSize(650, 650);
     glutCreateWindow(title);
 
 
     //Set the glut functions
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
-    glutTimerFunc(move_speed, moveSnakeAuto, 0);
+    glutTimerFunc(move_speed, grow, 0);
 
     int initSize = 3;
 
     // Specify the coordinates to each part of the snake
-    for(int a = 1; a <= initSize; a++){
+    /*for(int a = 1; a <= initSize; a++){
         std::deque<float> row;
         row.push_back(0.0f);
         row.push_back((map_half_length + 2.0f + (initSize * 2)) - (a * 2));
 
         part_coords.push_front(row);
-    }
+    }*/
+
+    std::deque<float> row;
+    int x = rand()%(int)(map_half_length*2);
+    row.push_back((float)x);
+    int y = rand()%(int)(map_half_length*2);
+    row.push_back((float)y);
+    part_coords.push_back(row);
+    map[x+1][y+1]=1;
+
 
     srand(time(NULL));
     constructMap();
@@ -47,119 +56,6 @@ int main(int argc, char** argv){
     glutMainLoop();
 
     return 0;
-}
-
-int randNum(){
-    int new_num = rand() % 50 + 1;
-    return new_num;
-}
-
-void moveSnake(int new_direction){
-    direction = new_direction;
-
-    int last_part = part_coords.size() - 1;
-    deque<float> new_head = part_coords[last_part];
-    std::cout<< "x: " << part_coords[0][0] << " y: " <<  part_coords[0][1] << std::endl;
-
-    float deltaX = 0.0;
-    float deltaY = 0.0;
-    int snakePart = 0;
-
-    switch (direction)
-    {
-        case 1:
-            deltaY = 2.0;
-            snakePart = 1;
-        break;
-        case 2:
-            deltaY = -2.0;
-            snakePart = 1;
-        break;
-        case 3:
-            deltaX = 2.0;
-            snakePart = 0;
-        break;
-        case 4:
-            deltaX = -2.0;
-            snakePart = 0;
-        break;
-    }
-
-    // Did we slither into ourself?
-    for(unsigned int a = 0; a < part_coords.size(); a++){
-        if(part_coords[0][0] + deltaX == part_coords[a][0] &&
-           part_coords[0][1] + deltaY == part_coords[a][1]){
-           turn();
-         }
-    }
-
-    // Did we slither into a wall?
-    if(part_coords[0][snakePart] == map_half_length - 4.0f){
-        cout << part_coords[0][snakePart];
-        cout << " HIT\n";
-        turn();
-    }
-
-    new_head[0] = part_coords[0][0] + deltaX;
-    new_head[1] = part_coords[0][1] + deltaY;
-
-    part_coords.push_front(new_head);
-
-    if(!growth_stage){
-        part_coords.pop_back();
-    } else if(growth_stage == growth){
-        growth_stage = 0;
-    } else {
-        growth_stage++;
-    }
-
-    glutPostRedisplay();
-}
-
-void turn(){
-    int new_direction;
-
-    if (direction == 3 || direction == 4){
-        new_direction = rand() % 1 + 1;
-        moved = true;
-        cout << new_direction;
-        cout << " new_direction U/D \n";
-        moveSnake(new_direction);
-    }
-    else {
-        new_direction = rand() % 1 + 3;
-        moved = true;
-        cout << new_direction;
-        cout << " new_direction L/R \n";
-        moveSnake(new_direction);
-    }
-    glutPostRedisplay();
-}
-
-void moveSnakeAuto(int value){
-    int check = randNum();
-    if (check % 7 == 0){
-      turn();
-    }
-    if(!moved){
-        UNUSED(value);
-        if(direction == 1){
-            growth_stage++;
-            moveSnake(1);
-        } else if(direction == 2){
-            growth_stage++;
-            moveSnake(2);
-        } else if(direction == 3){
-            growth_stage++;
-            moveSnake(3);
-        } else if(direction == 4){
-            growth_stage++;
-            moveSnake(4);
-        }
-    } else {
-        moved = false;
-    }
-    glutTimerFunc(move_speed, moveSnakeAuto, 0);
 }
 
 void grow(int value){
@@ -172,16 +68,24 @@ void grow(int value){
     */
     UNUSED(value);
 
-    //Add all possible directions
-    for(int i=1; i<5; i++){
-        directions.push_back(i);
-    }
-
     //Get the last coordinates
     int last_part = part_coords.size() - 1;
     deque<float> new_head = part_coords[last_part];
 
 
+    if(map[(int)new_head[0]+1][(int)new_head[1]+2]==0){
+        directions.push_back(1);
+    }
+    if(map[(int)new_head[0]+1][(int)new_head[1]]==0){
+        directions.push_back(2);
+    }
+    if(map[(int)new_head[0]+2][(int)new_head[1]+1]==0){
+        directions.push_back(3);
+    }
+    if(map[(int)new_head[0]][(int)new_head[1]+1]==0){
+        directions.push_back(4);
+    }
+    printMap();
 
     //Reset if no valid directions
     if(directions.empty()){
@@ -189,21 +93,57 @@ void grow(int value){
         return;
     }
 
+    for(int n:directions){
+        //std::cout<<n<< "  ";
+    }
+    //std::cout<<std::endl;
+
     //Choose direction to move out of valid directions
-    int direction = rand()%directions.size();
+    int direction = directions.at(rand()%directions.size());
 
+    if(direction==1){
+        new_head[0] = new_head[0];
+        new_head[1] = new_head[1]+1;
+    }
+    else if(direction==2){
+        new_head[0] = new_head[0];
+        new_head[1] = new_head[1]-1;
+    }
+    else if(direction==3){
+        new_head[0] = new_head[0]+1;
+        new_head[1] = new_head[1];
+    }
+    else if(direction==4){
+        new_head[0] = new_head[0]-1;
+        new_head[1] = new_head[1];
+    }
 
-    //Change the coordinates
-    new_head[0] = part_coords[0][0];
-    new_head[1] = part_coords[0][1];
+    //std::cout<<part_coords.size()<<std::endl;
+
+    std::cout<< "x:" << new_head[0] << " y: " << new_head[1] <<std::endl;
+    map[(int)new_head[0]+1][(int)new_head[1]+1] = 1;
 
     //Push the new head onto the coords
     part_coords.push_back(new_head);
 
+    directions.clear();
+    glutTimerFunc(move_speed, grow, 0);
 }
 
 void reset(){
+    std::cout << "RESETING"<<std::endl;
+    part_coords.clear();
     constructMap();
+
+    std::deque<float> row;
+    int x = rand()%(int)(map_half_length*2);
+    row.push_back((float)x);
+    int y = rand()%(int)(map_half_length*2);
+    row.push_back((float)y);
+    map[x+1][y+1]=1;
+
+    part_coords.push_back(row);
+
     glutTimerFunc(move_speed, grow, 0);
 }
 
@@ -226,6 +166,18 @@ void constructMap(){
     }
 }
 
+void printMap(){
+    /*
+        Prints the map
+    */
+    for(int row=0; row<HEIGHT+2; row++){
+        for(int col=0; col<WIDTH+2; col++){
+            std::cout<<map[row][col];
+        }
+        std::cout<<std::endl;
+    }
+}
+
 void initGL(){
     glMatrixMode(GL_PROJECTION);
     gluPerspective(75.0f, 1, 0.0f, 35.0f);
@@ -237,7 +189,7 @@ void reshape(GLsizei width, GLsizei height){
     UNUSED(height);
 
     // Make the window non-resizable so we don't have to worry about size changes
-    glutReshapeWindow(600, 600);
+    glutReshapeWindow(650, 650);
 }
 
 void display(){
