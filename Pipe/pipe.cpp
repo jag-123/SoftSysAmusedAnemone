@@ -60,35 +60,35 @@ void grow(int value){
         2 - down
         3 - right
         4 - left
-        5 - in
-        6 - out
+        5 - out
+        6 - in
     */
     UNUSED(value);
 
     //Get the last coordinates
     int last_part = part_coords.size() - 1;
-    deque<float> new_head = part_coords[last_part];
+    deque<deque<float>> new_head = part_coords[last_part];
 
 
-    if(map[(int)new_head[0]+1][(int)new_head[1]+2]==0){
+    if(map[(int)new_head[0]+1][(int)new_head[1]+2][(int)new_head[2]+1]==0){
         directions.push_back(1);
     }
-    if(map[(int)new_head[0]+1][(int)new_head[1]]==0){
+    if(map[(int)new_head[0]+1][(int)new_head[1]][(int)new_head[2]+1]==0){
         directions.push_back(2);
     }
-    if(map[(int)new_head[0]+2][(int)new_head[1]+1]==0){
+    if(map[(int)new_head[0]+2][(int)new_head[1]+1][(int)new_head[2]+1]==0){
         directions.push_back(3);
     }
-    if(map[(int)new_head[0]][(int)new_head[1]+1]==0){
+    if(map[(int)new_head[0]][(int)new_head[1]+1][(int)new_head[2]+1]==0){
         directions.push_back(4);
     }
-    if(map[(int)new_head[0]+2][(int)new_head[1]+1]==0){
+    if(map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]+2]==0){
         directions.push_back(5);
     }
-    if(map[(int)new_head[0]][(int)new_head[1]+1]==0){
+    if(map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]]==0){
         directions.push_back(6);
     }
-    printMap();
+    // printMap();
 
     //Reset if no valid directions
     if(directions.empty()){
@@ -116,34 +116,44 @@ void grow(int value){
         last_direction = 1;
         new_head[0] = new_head[0];
         new_head[1] = new_head[1]+1;
+        new_head[2] = new_head[2]; 
     }
     else if(direction==2){
         last_direction = 2;
         new_head[0] = new_head[0];
         new_head[1] = new_head[1]-1;
+        new_head[2] = new_head[2];
     }
     else if(direction==3){
         last_direction = 3;
         new_head[0] = new_head[0]+1;
         new_head[1] = new_head[1];
+        new_head[2] = new_head[2];
     }
     else if(direction==4){
         last_direction = 4;
         new_head[0] = new_head[0]-1;
         new_head[1] = new_head[1];
+        new_head[2] = new_head[2];
     }
 
     else if(direction==5){
-        last_direction = 5;
+        last_direction = 4;
+        new_head[0] = new_head[0];
+        new_head[1] = new_head[1];
+        new_head[2] = new_head[2]+1;
     }
     else if(direction==6){
-        last_direction = 6;
+        last_direction = 4;
+        new_head[0] = new_head[0];
+        new_head[1] = new_head[1];
+        new_head[2] = new_head[2]-1;
     }
 
     //std::cout<<part_coords.size()<<std::endl;
 
-    std::cout<< "x:" << new_head[0] << " y: " << new_head[1] <<std::endl;
-    map[(int)new_head[0]+1][(int)new_head[1]+1] = 1;
+    std::cout<< "x:" << new_head[0] << " y: " << new_head[1] <<" z: " << new_head[2] <<std::endl;
+    map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]+1] = 1;
 
     //Push the new head onto the coords
     part_coords.push_back(new_head);
@@ -158,15 +168,22 @@ void reset(){
     constructMap();
 
     std::deque<float> row;
+    std::deque<float> col;
+    std::deque<float> deep;
     int x = rand()%(int)(map_half_length*2);
     row.push_back((float)x);
     int y = rand()%(int)(map_half_length*2);
-    row.push_back((float)y);
+    col.push_back((float)y);
     int z = rand()%(int)(map_half_length*2);
-    row.push_back((float)z);
+    deep.push_back((float)z);
     map[x+1][y+1][z+1]=1;
 
-    part_coords.push_back(row);
+    std::deque<deque<float>> new_place;
+    new_place.push_back(row);
+    new_place.push_back(col);
+    new_place.push_back(deep);
+
+    part_coords.push_back(new_place);
 
     red = rand()%255;
     green =rand()%255;
@@ -196,17 +213,17 @@ void constructMap(){
     }
 }
 
-void printMap(){
-    /*
-        Prints the map
-    */
-    for(int row=0; row<HEIGHT+2; row++){
-        for(int col=0; col<WIDTH+2; col++){
-            std::cout<<map[row][col];
-        }
-        std::cout<<std::endl;
-    }
-}
+// void printMap(){
+//     /*f
+//         Prints the map
+//     */
+//     for(int row=0; row<HEIGHT+2; row++){
+//         for(int col=0; col<WIDTH+2; col++){
+//             std::cout<<map[row][col];
+//         }
+//         std::cout<<std::endl;
+//     }
+// }
 
 void initGL(){
     glEnable(GL_DEPTH_TEST);
@@ -235,7 +252,7 @@ void display(){
 
     for(unsigned int a = 0; a < part_coords.size(); a++){
         glLoadIdentity();
-        glTranslatef(part_coords[a][1]-30, -part_coords[a][0]+30, -40.0f);
+        glTranslatef(part_coords[a][1][2]-30, -part_coords[a][0][1]+30, part_coords[a][2][0]-40.0f);
 
         glColor3ub(red, green, blue);
 

@@ -13,7 +13,7 @@ using namespace std;
 #define WIDTH 59
 #define DEPTH 59
 
-deque<deque<deque<float> >> part_coords;
+deque<deque<deque<float>>> part_coords;
 vector<int> directions;
 int map[WIDTH+2][HEIGHT+2][DEPTH+2];
 
