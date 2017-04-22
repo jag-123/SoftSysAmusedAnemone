@@ -37,7 +37,7 @@ void printMap();
 
 //Opengl functions
 void initGL();
-void reshape(GLsizei width, GLsizei height, GLsizei depth);
+void reshape(GLsizei width, GLsizei height);
 void display();
 
 #endif //PIPE_H
