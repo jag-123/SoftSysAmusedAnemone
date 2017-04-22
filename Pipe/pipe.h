@@ -11,10 +11,11 @@ using namespace std;
 #define UNUSED(param) (void)(param)
 #define HEIGHT 59
 #define WIDTH 59
+#define DEPTH 59
 
-deque<deque<float> > part_coords;
+deque<deque<deque<float> >> part_coords;
 vector<int> directions;
-int map[WIDTH+2][HEIGHT+2];
+int map[WIDTH+2][HEIGHT+2][DEPTH+2];
 
 GLubyte red;
 GLubyte green;
@@ -36,7 +37,7 @@ void printMap();
 
 //Opengl functions
 void initGL();
-void reshape(GLsizei width, GLsizei height);
+void reshape(GLsizei width, GLsizei height, GLsizei depth);
 void display();
 
 #endif //PIPE_H
