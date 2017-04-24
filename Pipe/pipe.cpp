@@ -78,7 +78,7 @@ void grow(int value){
     if(map[(int)new_head[0]][(int)new_head[1]+1]==0){
         directions.push_back(4);
     }
-    // printMap();
+    printMap();
 
     //Reset if no valid directions
     if(directions.empty()){
@@ -125,12 +125,11 @@ void grow(int value){
 
     //std::cout<<part_coords.size()<<std::endl;
 
-    // std::cout<< "x:" << new_head[0] << " y: " << new_head[1] <<std::endl;
+    std::cout<< "x:" << new_head[0] << " y: " << new_head[1] <<std::endl;
     map[(int)new_head[0]+1][(int)new_head[1]+1] = 1;
 
     //Push the new head onto the coords
     part_coords.push_back(new_head);
-    std::cout<< "part coords:" << part_coords.back()[0] << " "<< part_coords.back().back() <<std::endl;
 
     directions.clear();
     glutTimerFunc(move_speed, grow, 0);
@@ -147,9 +146,7 @@ void reset(){
     int y = rand()%(int)(map_half_length*2);
     row.push_back((float)y);
     map[x+1][y+1]=1;
-    for (int i = 0; i < row.size(); i++){
-      std::cout << row[i]<< std::endl;
-    }
+
     part_coords.push_back(row);
 
     red = rand()%255;
