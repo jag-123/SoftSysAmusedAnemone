@@ -32,7 +32,7 @@ int last_direction;
 void grow(int value);
 void reset();
 void constructMap();
-void printMap();
+// void printMap();
 
 //Opengl functions
 void initGL();
