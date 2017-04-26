@@ -108,11 +108,6 @@ void grow(int value){
         }
     }
 
-    // for(int n:directions){
-    //     //std::cout<<n<< "  ";
-    // }
-    //std::cout<<std::endl;
-
     //Choose direction to move out of valid directions
     int direction = directions.at(rand()%directions.size());
 
@@ -154,9 +149,6 @@ void grow(int value){
         new_head[2] = new_head[2]-1;
     }
 
-    //std::cout<<part_coords.size()<<std::endl;
-
-    // std::cout<< "x:" << new_head[0] << " y: " << new_head[1] <<" z: " << new_head[2] <<std::endl;
     map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]+1] = direction/2;
 
     //Push the new head onto the coords
@@ -209,18 +201,6 @@ void constructMap(){
         }
     }
 }
-
-// void printMap(){
-//     /*f
-//         Prints the map
-//     */
-//     for(int row=0; row<HEIGHT+2; row++){
-//         for(int col=0; col<WIDTH+2; col++){
-//             std::cout<<map[row][col];
-//         }
-//         std::cout<<std::endl;
-//     }
-// }
 
 void initGL(){
     glEnable(GL_DEPTH_TEST);
