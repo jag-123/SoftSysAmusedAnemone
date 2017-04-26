@@ -30,10 +30,6 @@ int main(int argc, char** argv){
     glutReshapeFunc(reshape);
     glutTimerFunc(move_speed, grow, 0);
 
-    red = rand()%255;
-    green =rand()%255;
-    blue =rand()%255;
-
     std::deque<float> row;
     int x = rand()%(int)(map_half_length*2);
     row.push_back((float)x);
@@ -254,6 +250,10 @@ void display(){
         glLoadIdentity();
         glTranslatef(part_coords[a][1][2]-30, -part_coords[a][0][1]+30, part_coords[a][2][0]-40.0f);
 
+        red = rand()%255;
+        green =rand()%255;
+        blue =rand()%255;
+        
         glColor3ub(red, green, blue);
 
         glutSolidSphere(12.0, 50, 50);
