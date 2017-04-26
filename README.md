@@ -11,7 +11,7 @@ We implemented a simple screen saver in C++ using OpenGL. Our basis for the scre
 * [Jeremy Garcia](https://github.com/jag-123)
 
 ## Getting Started
-To get started you, will install GLUT installed on your machine:
+To get started, you will need to have GLUT installed on your machine:
                   
                   freeglut3-dev
                   freeglut3
