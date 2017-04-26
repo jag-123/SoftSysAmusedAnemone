@@ -21,9 +21,11 @@ To get started, you will need to have GLUT installed on your machine:
 
                 sudo apt-get install freeglut3 freeglut3-dev libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx libgl1-mesa-dev
 
-Download the folder called "final" and compile the program by running `make`.
+
 
 ## Usage
+Download the folder called "final" and compile the program by running `make`.
+
 
 Provide brief examples of how to run the code and expected results (more in the report)
 Describe any required input/output files.
