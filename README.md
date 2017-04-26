@@ -1,8 +1,8 @@
 # Pristine Pipes
 
 ## Description
+We implemented a simple screen saver in C++ using OpenGL. Our basis for the screen saver was the [pipes screen saver](https://www.youtube.com/watch?v=Uzx9ArZ7MUU). Learn more about our project at our [project site](https://jag-123.github.io/SoftSysAmusedAnemone/).
 
-"What does it do", including some context. You can be brief here and include a link to your final report for more details
 
 ## Authors
 * [Carl Moser](https://github.com/cmoser96)
