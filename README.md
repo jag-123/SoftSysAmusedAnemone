@@ -1,2 +1,31 @@
-# Amused-Anemone
-Softsys project 2
+# Pristine Pipes
+
+## Description
+We implemented a simple screen saver in C++ using OpenGL. Our basis for the screen saver was the [pipes screen saver](https://www.youtube.com/watch?v=Uzx9ArZ7MUU). Learn more about our project at our [project site](https://jag-123.github.io/SoftSysAmusedAnemone/).
+
+
+## Authors
+* [Carl Moser](https://github.com/cmoser96)
+* [Emma Price](https://github.com/ejprice54321)
+* [Cleophas Kalekem](https://github.com/kalekem)
+* [Jeremy Garcia](https://github.com/jag-123)
+
+## Getting Started
+
+Installation instructions, including any required dependencies. A good approach here is to provide a list of required packages/programs, along with a helpful sudo apt-get install x y z one-liner.
+
+## Usage
+
+Provide brief examples of how to run the code and expected results (more in the report)
+Describe any required input/output files.
+
+## License
+MIT License
+
+Copyright (c) 2017 SoftSysAmusedAnemone
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
