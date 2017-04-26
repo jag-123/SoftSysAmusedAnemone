@@ -243,10 +243,6 @@ void display(){
         glLoadIdentity();
         glTranslatef(part_coords[a][0]-30, -part_coords[a][1]+30, part_coords[a][2]-80.0f);
 
-        red = rand()%255;
-        green =rand()%255;
-        blue =rand()%255;
-        
         glColor3ub(red, green, blue);
 
         //glutSolidSphere(12.0, 50, 50);

@@ -17,9 +17,9 @@ deque<vector<float>> part_coords;
 vector<int> directions;
 int map[WIDTH+2][HEIGHT+2][DEPTH+2];
 
-GLubyte red;
-GLubyte green;
-GLubyte blue;
+GLubyte red = 0;;
+GLubyte green = 0;
+GLubyte blue = 0;
 
 const char *title;
 float map_half_length ;

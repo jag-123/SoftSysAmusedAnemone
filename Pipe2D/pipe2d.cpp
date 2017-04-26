@@ -78,7 +78,6 @@ void grow(int value){
     if(map[(int)new_head[0]][(int)new_head[1]+1]==0){
         directions.push_back(4);
     }
-    printMap();
 
     //Reset if no valid directions
     if(directions.empty()){
@@ -100,6 +99,7 @@ void grow(int value){
     //std::cout<<std::endl;
 
     //Choose direction to move out of valid directions
+
     int direction = directions.at(rand()%directions.size());
 
     if(direction==1){
@@ -125,7 +125,7 @@ void grow(int value){
 
     //std::cout<<part_coords.size()<<std::endl;
 
-    std::cout<< "x:" << new_head[0] << " y: " << new_head[1] <<std::endl;
+    // std::cout<< "x:" << new_head[0] << " y: " << new_head[1] <<std::endl;
     map[(int)new_head[0]+1][(int)new_head[1]+1] = 1;
 
     //Push the new head onto the coords
@@ -179,9 +179,9 @@ void printMap(){
     /*
         Prints the map
     */
-    for(int row=0; row<HEIGHT+2; row++){
-        for(int col=0; col<WIDTH+2; col++){
-            std::cout<<map[row][col];
+    for(int row=0; row<part_coords.size(); row++){
+        for(int col=0; col<part_coords[0].size(); col++){
+            std::cout<<part_coords[row][col];
         }
         std::cout<<std::endl;
     }
@@ -214,6 +214,10 @@ void display(){
     for(unsigned int a = 0; a < part_coords.size(); a++){
         glLoadIdentity();
         glTranslatef(part_coords[a][1]-30, -part_coords[a][0]+30, -40.0f);
+
+        red = rand()%255;
+        green =rand()%255;
+        blue =rand()%255;
 
         glColor3ub(red, green, blue);
 

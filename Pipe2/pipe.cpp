@@ -63,6 +63,7 @@ void grow(int value){
 
     //Get the last coordinates
     int last_part = part_coords.size() - 1;
+    std::cout<< last_part<<std::endl;
     deque<float> new_head = part_coords[last_part];
 
 
