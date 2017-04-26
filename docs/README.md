@@ -5,8 +5,7 @@
 * [Jeremy Garcia](https://github.com/jag-123)
 
 # Big Idea/Abstract
-
-The first thing someone should see when they land on your site is a quick and easily understandable explanation of what your project is all about.
+The first thing someone should see when they land on your site is a quick and easily understandable explanation of what your project is all about. View our code [here](https://github.com/jag-123/SoftSysAmusedAnemone).
 
 # Background
 
@@ -17,7 +16,7 @@ Provide context for your project by describing the broader space in which it is 
 What specifically did you accomplish with this project? Within the context of the problem space, enumerate the potential options and explain why you chose what you did. Describe what makes it interesting/challenging, and how you overcame those challenges. Explain your implementation and design decisions with sufficient detail for a technical audience to understand it.
 
 # Results
-The following video is an example of our pipes screen saver in action. 
+The following video is an example of our pipes screen saver in action.
 
 [Pipes Screen Saver](https://github.com/jag-123/SoftSysAmusedAnemone/)
 

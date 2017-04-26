@@ -11,8 +11,7 @@ We implemented a simple screen saver in C++ using OpenGL. Our basis for the scre
 * [Jeremy Garcia](https://github.com/jag-123)
 
 ## Getting Started
-
-Installation instructions, including any required dependencies. A good approach here is to provide a list of required packages/programs, along with a helpful sudo apt-get install x y z one-liner.
+Download the folder called "final" and compile the program by running `make`.
 
 ## Usage
 
