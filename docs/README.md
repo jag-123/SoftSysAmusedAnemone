@@ -4,10 +4,11 @@
 * [Cleophas Kalekem](https://github.com/kalekem)
 * [Jeremy Garcia](https://github.com/jag-123)
 
-# Big Idea/Abstract
-The first thing someone should see when they land on your site is a quick and easily understandable explanation of what your project is all about. View our code [here](https://github.com/jag-123/SoftSysAmusedAnemone).
+# Abstract
+We implemented a simple screen saver in C++ using OpenGL. Our basis for the screen saver was the [pipes screen saver](https://www.youtube.com/watch?v=Uzx9ArZ7MUU).  View our code [here](https://github.com/jag-123/SoftSysAmusedAnemone).
 
 # Background
+We <3 pipes and so should you.
 
 Provide context for your project by describing the broader space in which it is situated. This section will likely draw upon your annotated bibliography. You’ve already collected this knowledge and shown us you understand it, now frame it for an external audience.
 
