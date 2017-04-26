@@ -5,9 +5,10 @@
 "What does it do", including some context. You can be brief here and include a link to your final report for more details
 
 ## Authors
-
-Could include links to e.g. personal portfolio site.
-Includes attribution for code you did not write.
+* [Carl Moser](https://github.com/cmoser96)
+* [Emma Price](https://github.com/ejprice54321)
+* [Cleophas Kalekem](https://github.com/kalekem)
+* [Jeremy Garcia](https://github.com/jag-123)
 
 ## Getting Started
 
