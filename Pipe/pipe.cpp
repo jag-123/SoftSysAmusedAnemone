@@ -241,7 +241,7 @@ void display(){
 
     for(unsigned int a = 0; a < part_coords.size(); a++){
         glLoadIdentity();
-        glTranslatef(part_coords[a][0]-30, -part_coords[a][1]+30, part_coords[a][2]-40.0f);
+        glTranslatef(part_coords[a][0]-30, -part_coords[a][1]+30, part_coords[a][2]-80.0f);
 
         glColor3ub(red, green, blue);
 
