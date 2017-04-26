@@ -11,8 +11,14 @@ We implemented a simple screen saver in C++ using OpenGL. Our basis for the scre
 * [Jeremy Garcia](https://github.com/jag-123)
 
 ## Getting Started
-
-Installation instructions, including any required dependencies. A good approach here is to provide a list of required packages/programs, along with a helpful sudo apt-get install x y z one-liner.
+To get started you, will install GLUT installed on your machine:
+                  
+                  freeglut3-dev
+                  freeglut3
+                  
+ To install the dependecies you need to run:
+ 
+                sudo apt-get install freeglut3 freeglut3-dev libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx libgl1-mesa-dev
 
 ## Usage
 
