@@ -13,7 +13,7 @@ int main(int argc, char** argv){
     title = "OpenGL Pipe";
     map_half_length = 14.0f;
     direction = 2;
-    move_speed = 30;
+    move_speed = 50;
     moved = false;
     growth_stage = 0;
     last_direction = 2;
@@ -64,6 +64,10 @@ void grow(int value){
         5 - in
     */
     UNUSED(value);
+
+    if(part_coords.size() > 1000){
+        reset();
+    }
 
     //Get the last coordinates
     int last_part = part_coords.size() - 1;
@@ -239,17 +243,28 @@ void display(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
 
+    /*red = rand()%255;
+    green =rand()%255;
+    blue =rand()%255;*/
+        
+
     for(unsigned int a = 0; a < part_coords.size(); a++){
         glLoadIdentity();
-        glTranslatef(part_coords[a][0]-30, -part_coords[a][1]+30, part_coords[a][2]-80.0f);
-
-        red = rand()%255;
-        green =rand()%255;
-        blue =rand()%255;
-        
         glColor3ub(red, green, blue);
 
+        x = part_coords[a][0];
+        y = part_coords[a][1];
+        z = part_coords[a][2];
+
+        glTranslatef(x-(WIDTH+1)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
+
         //glutSolidSphere(12.0, 50, 50);
+        if(map[x+1][y+1][z+1] == 1){
+            glRotatef(90, 0.0f, 1.0f, 0.0f);
+        }
+        if(map[x+1][y+1][z+1] == 0){
+            glRotatef(90, 1.0f, 0.0f, 0.0f);
+        }
 
         glBegin(GL_QUAD_STRIP);
             GLfloat COSan_3 = 0.0;
