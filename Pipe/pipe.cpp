@@ -34,14 +34,14 @@ int main(int argc, char** argv){
     green =rand()%255;
     blue =rand()%255;
 
-    std::deque<float> row;
+    vector<float> point;
     int x = rand()%(int)(map_half_length*2);
-    row.push_back((float)x);
+    point.push_back((float)x);
     int y = rand()%(int)(map_half_length*2);
-    row.push_back((float)y);
+    point.push_back((float)y);
     int z = rand()%(int)(map_half_length*2);
-    row.push_back((float)z);
-    part_coords.push_back(row);
+    point.push_back((float)z);
+    part_coords.push_back(point);
     map[x+1][y+1][z+1]=1;
 
 
@@ -56,37 +56,37 @@ int main(int argc, char** argv){
 void grow(int value){
     /*
         Directions:
-        1 - up
-        2 - down
-        3 - right
-        4 - left
-        5 - out
-        6 - in
+        0 - up
+        1 - down
+        2 - right
+        3 - left
+        4 - out
+        5 - in
     */
     UNUSED(value);
 
     //Get the last coordinates
     int last_part = part_coords.size() - 1;
-    deque<deque<float>> new_head = part_coords[last_part];
+    vector<float> new_head = part_coords[last_part];
 
 
     if(map[(int)new_head[0]+1][(int)new_head[1]+2][(int)new_head[2]+1]==0){
-        directions.push_back(1);
+        directions.push_back(0);
     }
     if(map[(int)new_head[0]+1][(int)new_head[1]][(int)new_head[2]+1]==0){
-        directions.push_back(2);
+        directions.push_back(1);
     }
     if(map[(int)new_head[0]+2][(int)new_head[1]+1][(int)new_head[2]+1]==0){
-        directions.push_back(3);
+        directions.push_back(2);
     }
     if(map[(int)new_head[0]][(int)new_head[1]+1][(int)new_head[2]+1]==0){
-        directions.push_back(4);
+        directions.push_back(3);
     }
     if(map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]+2]==0){
-        directions.push_back(5);
+        directions.push_back(4);
     }
     if(map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]]==0){
-        directions.push_back(6);
+        directions.push_back(5);
     }
     // printMap();
 
@@ -112,39 +112,39 @@ void grow(int value){
     //Choose direction to move out of valid directions
     int direction = directions.at(rand()%directions.size());
 
-    if(direction==1){
-        last_direction = 1;
+    if(direction==0){
+        last_direction = 0;
         new_head[0] = new_head[0];
         new_head[1] = new_head[1]+1;
         new_head[2] = new_head[2];
     }
-    else if(direction==2){
-        last_direction = 2;
+    else if(direction==1){
+        last_direction = 1;
         new_head[0] = new_head[0];
         new_head[1] = new_head[1]-1;
         new_head[2] = new_head[2];
     }
-    else if(direction==3){
-        last_direction = 3;
+    else if(direction==2){
+        last_direction = 2;
         new_head[0] = new_head[0]+1;
         new_head[1] = new_head[1];
         new_head[2] = new_head[2];
     }
-    else if(direction==4){
-        last_direction = 4;
+    else if(direction==3){
+        last_direction = 3;
         new_head[0] = new_head[0]-1;
         new_head[1] = new_head[1];
         new_head[2] = new_head[2];
     }
 
-    else if(direction==5){
+    else if(direction==4){
         last_direction = 4;
         new_head[0] = new_head[0];
         new_head[1] = new_head[1];
         new_head[2] = new_head[2]+1;
     }
-    else if(direction==6){
-        last_direction = 4;
+    else if(direction==5){
+        last_direction = 5;
         new_head[0] = new_head[0];
         new_head[1] = new_head[1];
         new_head[2] = new_head[2]-1;
@@ -153,7 +153,7 @@ void grow(int value){
     //std::cout<<part_coords.size()<<std::endl;
 
     // std::cout<< "x:" << new_head[0] << " y: " << new_head[1] <<" z: " << new_head[2] <<std::endl;
-    map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]+1] = 1;
+    map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]+1] = direction/2;
 
     //Push the new head onto the coords
     part_coords.push_back(new_head);
@@ -167,23 +167,16 @@ void reset(){
     part_coords.clear();
     constructMap();
 
-    std::deque<float> row;
-    std::deque<float> col;
-    std::deque<float> deep;
+    std::vector<float> point;
     int x = rand()%(int)(map_half_length*2);
-    row.push_back((float)x);
+    point.push_back((float)x);
     int y = rand()%(int)(map_half_length*2);
-    col.push_back((float)y);
+    point.push_back((float)y);
     int z = rand()%(int)(map_half_length*2);
-    deep.push_back((float)z);
+    point.push_back((float)z);
     map[x+1][y+1][z+1]=1;
 
-    std::deque<deque<float>> new_place;
-    new_place.push_back(row);
-    new_place.push_back(col);
-    new_place.push_back(deep);
-
-    part_coords.push_back(new_place);
+    part_coords.push_back(point);
 
     red = rand()%255;
     green =rand()%255;
@@ -228,6 +221,8 @@ void constructMap(){
 void initGL(){
     glEnable(GL_DEPTH_TEST);
     glMatrixMode(GL_PROJECTION);
+    glDepthFunc(GL_LEQUAL);
+    glShadeModel(GL_SMOOTH);
     gluPerspective(75.0f, 1, 0.0f, 35.0f);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
@@ -241,29 +236,26 @@ void reshape(GLsizei width, GLsizei height){
 }
 
 void display(){
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
-
-    // The vertex order is clockwise
-    // The side order is front, back, left, right, top, bottom (if applicable)
-
-    // Loop over pipe size and draw each part at it's respective coordinates
-
 
     for(unsigned int a = 0; a < part_coords.size(); a++){
         glLoadIdentity();
-        glTranslatef(part_coords[a][1][2]-30, -part_coords[a][0][1]+30, part_coords[a][2][0]-40.0f);
+        glTranslatef(part_coords[a][0]-30, -part_coords[a][1]+30, part_coords[a][2]-40.0f);
 
         glColor3ub(red, green, blue);
 
-        glutSolidSphere(12.0, 50, 50);
+        //glutSolidSphere(12.0, 50, 50);
 
-        // glBegin(GL_POLYGON);
-        //     glVertex2d( 0.5f,  0.5f);
-        //     glVertex2d( 0.5f, -0.5f);
-        //     glVertex2d(-0.5f, -0.5f);
-        //     glVertex2d(-0.5f,  0.5f);
-        // glEnd();
+        glBegin(GL_QUAD_STRIP);
+            GLfloat COSan_3 = 0.0;
+            GLfloat SINan_3 = 0.0;
+            for(GLfloat an = 0.0; an <= 2.0 * M_PI; an += M_PI / 12.0) {
+                        glNormal3f((COSan_3 = cos(an)/3.0), (SINan_3 = sin(an)/3.0), 2.0);
+                        glVertex3f(COSan_3, SINan_3, 0.5f);
+                        glVertex3f(COSan_3, SINan_3, -0.5f);
+        }
+        glEnd();
     }
 
     glutSwapBuffers();
