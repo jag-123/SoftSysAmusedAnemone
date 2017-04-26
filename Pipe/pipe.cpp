@@ -167,11 +167,11 @@ void grow(int value){
 }
 
 void reset(){
-    std::cout << "RESETING"<<std::endl;
+    cout << "RESETING"<<endl;
     part_coords.clear();
     constructMap();
 
-    std::vector<float> point;
+    vector<float> point;
     int x = rand()%(int)(map_half_length*2);
     point.push_back((float)x);
     int y = rand()%(int)(map_half_length*2);
