@@ -48,10 +48,6 @@ int main(int argc, char** argv){
     srand(time(NULL));
     constructMap();
     initGL();
-    GLfloat lightPos1[] = {-1.0f, 0.5f, 0.5f, 0.0f};
-    GLfloat lightColor1[] = {0.5f, 0.2f, 0.2f, 1.0f}; //Color (0.5, 0.2, 0.2)
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
-    glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
     glutMainLoop();
 
     return 0;
@@ -165,11 +161,11 @@ void grow(int value){
 }
 
 void reset(){
-    std::cout << "RESETING"<<std::endl;
+    cout << "RESETING"<<endl;
     part_coords.clear();
-    constructMap();
+    // constructMap();
 
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
+    // glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
 
     std::vector<float> point;
     int x = rand()%(int)(map_half_length*2);
@@ -210,25 +206,13 @@ void constructMap(){
     }
 }
 
-// void printMap(){
-//     /*f
-//         Prints the map
-//     */
-//     for(int row=0; row<HEIGHT+2; row++){
-//         for(int col=0; col<WIDTH+2; col++){
-//             std::cout<<map[row][col];
-//         }
-//         std::cout<<std::endl;
-//     }
-// }
-
 void initGL(){
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_COLOR_MATERIAL);
-    glEnable(GL_LIGHTING); //Enable lighting
-    glEnable(GL_LIGHT0); //Enable light #0
-    glEnable(GL_LIGHT1); //Enable light #1
-    glEnable(GL_NORMALIZE); //Automatically normalize normals
+    // glEnable(GL_COLOR_MATERIAL);
+    // glEnable(GL_LIGHTING); //Enable lighting
+    // glEnable(GL_LIGHT0); //Enable light #0
+    // glEnable(GL_LIGHT1); //Enable light #1
+    // glEnable(GL_NORMALIZE); //Automatically normalize normals
     glMatrixMode(GL_PROJECTION);
     glDepthFunc(GL_LEQUAL);
     glShadeModel(GL_SMOOTH);
@@ -257,6 +241,10 @@ void display(){
 
     for(unsigned int a = 0; a < part_coords.size(); a++){
         glLoadIdentity();
+        red = rand()%255;
+        green =rand()%255;
+        blue =rand()%255;
+
         glColor3ub(red, green, blue);
 
         x = part_coords[a][0];
@@ -265,6 +253,7 @@ void display(){
 
         glTranslatef(x-(WIDTH+1)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
 
+        //glutSolidSphere(12.0, 50, 50);
         if(map[x+1][y+1][z+1] == 2){
             glRotatef(90, 0.0f, 1.0f, 0.0f);
         }
