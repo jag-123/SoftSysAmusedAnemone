@@ -114,46 +114,48 @@ void grow(int value){
 
     //Choose direction to move out of valid directions
     int direction = directions.at(rand()%directions.size());
+    if (last_direction != direction) glutSolidSphere(10.0, 50, 50);
 
-    if(direction==0){
-        last_direction = 0;
-        new_head[0] = new_head[0];
-        new_head[1] = new_head[1]+1;
-        new_head[2] = new_head[2];
-    }
-    else if(direction==1){
-        last_direction = 1;
-        new_head[0] = new_head[0];
-        new_head[1] = new_head[1]-1;
-        new_head[2] = new_head[2];
-    }
-    else if(direction==2){
-        last_direction = 2;
-        new_head[0] = new_head[0]+1;
-        new_head[1] = new_head[1];
-        new_head[2] = new_head[2];
-    }
-    else if(direction==3){
-        last_direction = 3;
-        new_head[0] = new_head[0]-1;
-        new_head[1] = new_head[1];
-        new_head[2] = new_head[2];
+    switch(direction){
+        case 0:
+            last_direction = 0;
+            new_head[0] = new_head[0];
+            new_head[1] = new_head[1]+1;
+            new_head[2] = new_head[2];
+            break;
+        case 1:
+            last_direction = 1;
+            new_head[0] = new_head[0];
+            new_head[1] = new_head[1]-1;
+            new_head[2] = new_head[2];
+            break;
+        case 2:
+            last_direction = 2;
+            new_head[0] = new_head[0]+1;
+            new_head[1] = new_head[1];
+            new_head[2] = new_head[2];
+            break;
+         case 3:
+            last_direction = 3;
+            new_head[0] = new_head[0]-1;
+            new_head[1] = new_head[1];
+            new_head[2] = new_head[2];
+            break;
+        case 4:
+            last_direction = 4;
+            new_head[0] = new_head[0];
+            new_head[1] = new_head[1];
+            new_head[2] = new_head[2]+1;
+            break;
+        case 5:
+            last_direction = 5;
+            new_head[0] = new_head[0];
+            new_head[1] = new_head[1];
+            new_head[2] = new_head[2]-1;
+            break;
     }
 
-    else if(direction==4){
-        last_direction = 4;
-        new_head[0] = new_head[0];
-        new_head[1] = new_head[1];
-        new_head[2] = new_head[2]+1;
-    }
-    else if(direction==5){
-        last_direction = 5;
-        new_head[0] = new_head[0];
-        new_head[1] = new_head[1];
-        new_head[2] = new_head[2]-1;
-    }
-
-    map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]+1] = direction/2;
+    map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]+1] = direction/2 + 1;
 
     //Push the new head onto the coords
     part_coords.push_back(new_head);
@@ -167,7 +169,9 @@ void reset(){
     part_coords.clear();
     constructMap();
 
-    vector<float> point;
+    // glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
+
+    std::vector<float> point;
     int x = rand()%(int)(map_half_length*2);
     point.push_back((float)x);
     int y = rand()%(int)(map_half_length*2);
@@ -208,6 +212,11 @@ void constructMap(){
 
 void initGL(){
     glEnable(GL_DEPTH_TEST);
+    // glEnable(GL_COLOR_MATERIAL);
+    // glEnable(GL_LIGHTING); //Enable lighting
+    // glEnable(GL_LIGHT0); //Enable light #0
+    // glEnable(GL_LIGHT1); //Enable light #1
+    // glEnable(GL_NORMALIZE); //Automatically normalize normals
     glMatrixMode(GL_PROJECTION);
     glDepthFunc(GL_LEQUAL);
     glShadeModel(GL_SMOOTH);
@@ -230,10 +239,14 @@ void display(){
     /*red = rand()%255;
     green =rand()%255;
     blue =rand()%255;*/
-        
+
 
     for(unsigned int a = 0; a < part_coords.size(); a++){
         glLoadIdentity();
+        red = rand()%255;
+        green =rand()%255;
+        blue =rand()%255;
+
         glColor3ub(red, green, blue);
 
         x = part_coords[a][0];
@@ -243,10 +256,10 @@ void display(){
         glTranslatef(x-(WIDTH+1)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
 
         //glutSolidSphere(12.0, 50, 50);
-        if(map[x+1][y+1][z+1] == 1){
+        if(map[x+1][y+1][z+1] == 2){
             glRotatef(90, 0.0f, 1.0f, 0.0f);
         }
-        if(map[x+1][y+1][z+1] == 0){
+        if(map[x+1][y+1][z+1] == 1){
             glRotatef(90, 1.0f, 0.0f, 0.0f);
         }
 
