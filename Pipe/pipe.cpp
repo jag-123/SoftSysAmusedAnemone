@@ -233,6 +233,7 @@ void display(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
 
+    /*UNCOMMENT NEXT THREE LINE FOR MELLOW PARTY MODE*/
     /*red = rand()%255;
     green =rand()%255;
     blue =rand()%255;*/
@@ -240,6 +241,8 @@ void display(){
 
     for(unsigned int a = 0; a < part_coords.size(); a++){
         glLoadIdentity();
+
+        /*UNCOMMENT NEXT THREE LINE FOR FULL PARTY MODE*/
         red = rand()%255;
         green =rand()%255;
         blue =rand()%255;
