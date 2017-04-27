@@ -92,12 +92,13 @@ void grow(int value){
     if(map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]]==0){
         directions.push_back(5);
     }
-    // printMap();
 
     //Reset if no valid directions
     if(directions.empty()){
         reset();
+        //goto restart;
         glutTimerFunc(move_speed, grow, 0);
+        return;
     }
 
     for(int n:directions){
