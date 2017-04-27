@@ -14,8 +14,6 @@ int main(int argc, char** argv){
     map_half_length = 14.0f;
     direction = 2;
     move_speed = 50;
-    moved = false;
-    growth_stage = 0;
     last_direction = 2;
 
     //Init glut
@@ -50,6 +48,7 @@ int main(int argc, char** argv){
     initGL();
     glutMainLoop();
 
+    delete title;
     return 0;
 }
 
@@ -98,10 +97,7 @@ void grow(int value){
     //Reset if no valid directions
     if(directions.empty()){
         reset();
-
-        //This seems to fix the issue
-        //We probably shouldn't use a goto function though...
-        goto restart;
+        glutTimerFunc(move_speed, grow, 0);
     }
 
     for(int n:directions){

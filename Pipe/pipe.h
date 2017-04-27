@@ -27,9 +27,6 @@ const char *title;
 float map_half_length ;
 int direction;
 int move_speed;
-bool moved;
-int growth_stage;
-int growth;
 int last_direction;
 
 void grow(int value);
