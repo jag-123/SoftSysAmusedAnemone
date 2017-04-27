@@ -13,7 +13,7 @@ int main(int argc, char** argv){
     title = "OpenGL Pipe";
     map_half_length = 14.0f;
     direction = 2;
-    move_speed = 50;
+    move_speed = 20;
     moved = false;
     growth_stage = 0;
     last_direction = 2;
@@ -45,7 +45,7 @@ int main(int argc, char** argv){
     map[x+1][y+1][z+1]=1;
 
 
-    srand(time(NULL));
+    // srand(time(NULL));
     constructMap();
     initGL();
     glutMainLoop();
@@ -65,7 +65,7 @@ void grow(int value){
     */
     UNUSED(value);
 
-    if(part_coords.size() > 1000){
+    if(part_coords.size() > 500){
         reset();
     }
 
@@ -182,7 +182,8 @@ void reset(){
     green =rand()%255;
     blue =rand()%255;
 
-    glutTimerFunc(move_speed, grow, 0);
+    // glutTimerFunc(move_speed, grow,
+
 }
 
 void constructMap(){
