@@ -65,10 +65,11 @@ void grow(int value){
     */
     UNUSED(value);
 
-    if(part_coords.size() > 1000){
+    if(part_coords.size() > 100){
         reset();
     }
 
+    restart:
     //Get the last coordinates
     int last_part = part_coords.size() - 1;
     vector<float> new_head = part_coords[last_part];
@@ -97,7 +98,10 @@ void grow(int value){
     //Reset if no valid directions
     if(directions.empty()){
         reset();
-        return;
+
+        //This seems to fix the issue
+        //We probably shouldn't use a goto function though...
+        goto restart;
     }
 
     for(int n:directions){
@@ -178,7 +182,7 @@ void reset(){
     green =rand()%255;
     blue =rand()%255;
 
-    glutTimerFunc(move_speed, grow, 0);
+    //glutTimerFunc(move_speed, grow, 0);
 }
 
 void constructMap(){
