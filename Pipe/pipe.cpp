@@ -162,7 +162,18 @@ void grow(int value){
 }
 
 void reset(){
-    cout << "RESETING"<<endl;
+    cout << "RESETING "<< reset_val << endl;
+    reset_val += 1;
+    // keeps previous pipes on the screen
+    part_coords2.insert( part_coords2.end(), part_coords.begin(), part_coords.end() );
+    for (int i=0; i<HEIGHT+2; i++) {
+      for (int j=0; j<WIDTH+2; j++) {
+        for (int k=0; k<DEPTH+2; k++) {
+          map2[i][j][k] += map[i][j][k];
+        }
+      }
+    }
+
     part_coords.clear();
     constructMap();
 
@@ -243,9 +254,9 @@ void display(){
         glLoadIdentity();
 
         /*UNCOMMENT NEXT THREE LINE FOR FULL PARTY MODE*/
-        red = rand()%255;
-        green =rand()%255;
-        blue =rand()%255;
+        // red = rand()%255;
+        // green =rand()%255;
+        // blue =rand()%255;
 
         glColor3ub(red, green, blue);
 
@@ -273,6 +284,32 @@ void display(){
         }
         glEnd();
     }
+    for(unsigned int a = 0; a < part_coords2.size(); a++){
+        glLoadIdentity();
 
+        x = part_coords2[a][0];
+        y = part_coords2[a][1];
+        z = part_coords2[a][2];
+
+        glTranslatef(x-(WIDTH+1)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
+
+        //glutSolidSphere(12.0, 50, 50);
+        if(map2[x+1][y+1][z+1] == 2){
+            glRotatef(90, 0.0f, 1.0f, 0.0f);
+        }
+        if(map2[x+1][y+1][z+1] == 1){
+            glRotatef(90, 1.0f, 0.0f, 0.0f);
+        }
+
+        glBegin(GL_QUAD_STRIP);
+            GLfloat COSan_3 = 0.0;
+            GLfloat SINan_3 = 0.0;
+            for(GLfloat an = 0.0; an <= 2.0 * M_PI; an += M_PI / 12.0) {
+                        glNormal3f((COSan_3 = cos(an)/3.0), (SINan_3 = sin(an)/3.0), 2.0);
+                        glVertex3f(COSan_3, SINan_3, 0.5f);
+                        glVertex3f(COSan_3, SINan_3, -0.5f);
+        }
+        glEnd();
+    }
     glutSwapBuffers();
 }
