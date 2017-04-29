@@ -1,6 +1,3 @@
-### Authors
-* [Carl Moser](https://github.com/cmoser96), [Emma Price](https://github.com/ejprice54321), [Cleophas Kalekem](https://github.com/kalekem), [Jeremy Garcia](https://github.com/jag-123)
-
 ## Abstract
 We implemented a screen saver in C++ using OpenGL. Our basis for the screen saver was the [pipes screen saver](https://www.youtube.com/watch?v=Uzx9ArZ7MUU).  View our code [here](https://github.com/jag-123/SoftSysAmusedAnemone/Pipe).
 
