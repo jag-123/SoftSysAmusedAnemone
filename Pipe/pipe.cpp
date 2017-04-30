@@ -13,14 +13,14 @@ int main(int argc, char** argv){
     title = "OpenGL Pipe";
     map_half_length = 14.0f;
     direction = 2;
-    move_speed = 10;
+    move_speed = 25;
     last_direction = 2;
     screenW = 1920;
     screenH = 1080;
 
     //Init glut
     glutInit(&argc, argv);
-    glutInitDisplayMode (GLUT_DOUBLE | GLUT_DEPTH); 
+    glutInitDisplayMode (GLUT_DOUBLE | GLUT_DEPTH);
 
     glutInitWindowSize(screenW, screenH);
     glutCreateWindow(title);
@@ -70,7 +70,7 @@ void grow(int value){
     */
     UNUSED(value);
 
-    if(part_coords.size() > 5000){
+    if(part_coords.size() > 200){
         reset();
     }
 
@@ -169,8 +169,8 @@ void reset(){
     reset_val += 1;
     // keeps previous pipes on the screen
     part_coords2.insert( part_coords2.end(), part_coords.begin(), part_coords.end() );
-    for (int i=0; i<HEIGHT+2; i++) {
-      for (int j=0; j<WIDTH+2; j++) {
+    for (int i=0; i<WIDTH+2; i++) {
+      for (int j=0; j<HEIGHT+2; j++) {
         for (int k=0; k<DEPTH+2; k++) {
           map2[i][j][k] += map[i][j][k];
         }
