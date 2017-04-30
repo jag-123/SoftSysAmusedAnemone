@@ -9,8 +9,8 @@ using namespace std;
 
 // A macro for unused variables (to bypass those pesky G++ warnings)
 #define UNUSED(param) (void)(param)
-#define HEIGHT 29
-#define WIDTH 29
+#define HEIGHT 49
+#define WIDTH 79
 #define DEPTH 29
 
 deque<vector<float>> part_coords;
@@ -24,6 +24,7 @@ GLubyte green = 0;
 GLubyte blue = 0;
 
 int x, y, z;
+int screenH, screenW;
 
 const char *title;
 float map_half_length ;
@@ -35,6 +36,8 @@ int reset_val = 0;
 void grow(int value);
 void reset();
 void constructMap();
+void processKeys(unsigned char key, int x, int y);
+void processSpecial(int key, int x, int y);
 
 //Opengl functions
 void initGL();
