@@ -13,20 +13,24 @@ int main(int argc, char** argv){
     title = "OpenGL Pipe";
     map_half_length = 14.0f;
     direction = 2;
-    move_speed = 50;
+    move_speed = 10;
     last_direction = 2;
+    screenW = 1920;
+    screenH = 1080;
 
     //Init glut
     glutInit(&argc, argv);
+    glutInitDisplayMode (GLUT_DOUBLE | GLUT_DEPTH); 
 
-    glutInitWindowSize(600, 600);
+    glutInitWindowSize(screenW, screenH);
     glutCreateWindow(title);
-
+    glutFullScreen();
 
     //Set the glut functions
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
-    glutTimerFunc(move_speed, grow, 0);
+    glutKeyboardFunc(processKeys);
+    glutSpecialFunc(processSpecial);
 
     red = rand()%255;
     green =rand()%255;
@@ -42,10 +46,12 @@ int main(int argc, char** argv){
     part_coords.push_back(point);
     map[x+1][y+1][z+1]=1;
 
-
     srand(time(NULL));
     constructMap();
+
+
     initGL();
+    glutTimerFunc(move_speed, grow, 0);
     glutMainLoop();
 
     delete title;
@@ -64,11 +70,10 @@ void grow(int value){
     */
     UNUSED(value);
 
-    if(part_coords.size() > 100){
+    if(part_coords.size() > 5000){
         reset();
     }
 
-    restart:
     //Get the last coordinates
     int last_part = part_coords.size() - 1;
     vector<float> new_head = part_coords[last_part];
@@ -96,8 +101,7 @@ void grow(int value){
     //Reset if no valid directions
     if(directions.empty()){
         reset();
-        //goto restart;
-        glutTimerFunc(move_speed, grow, 0);
+        grow(1);
         return;
     }
 
@@ -111,7 +115,6 @@ void grow(int value){
 
     //Choose direction to move out of valid directions
     int direction = directions.at(rand()%directions.size());
-    if (last_direction != direction) glutSolidSphere(10.0, 50, 50);
 
     switch(direction){
         case 0:
@@ -207,6 +210,19 @@ void constructMap(){
     }
 }
 
+void processKeys(unsigned char key, int x, int y){
+    switch(key){
+        case 27:
+            exit(0);
+            break;
+        default:
+            return;
+    }
+}
+void processSpecial(int key, int x, int y){
+    cout<<key<<endl;
+}
+
 void initGL(){
     glEnable(GL_DEPTH_TEST);
     // glEnable(GL_COLOR_MATERIAL);
@@ -217,16 +233,16 @@ void initGL(){
     glMatrixMode(GL_PROJECTION);
     glDepthFunc(GL_LEQUAL);
     glShadeModel(GL_SMOOTH);
-    gluPerspective(75.0f, 1, 0.0f, 35.0f);
+    //gluPerspective(75.0f, 1, 0.0f, 35.0f);
+    gluPerspective(75.0f, (float)screenW/screenH, 0.0f, 35.0f);
+
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 void reshape(GLsizei width, GLsizei height){
-    UNUSED(width);
-    UNUSED(height);
-
-    // Make the window non-resizable so we don't have to worry about size changes
-    glutReshapeWindow(600, 600);
+    screenW = width;
+    screenH = height;
+    glutReshapeWindow(width, height);
 }
 
 void display(){
