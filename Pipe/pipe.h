@@ -14,8 +14,10 @@ using namespace std;
 #define DEPTH 29
 
 deque<vector<float>> part_coords;
+deque<vector<float>> part_coords2;
 vector<int> directions;
 int map[WIDTH+2][HEIGHT+2][DEPTH+2];
+int map2[WIDTH+2][HEIGHT+2][DEPTH+2];
 
 GLubyte red = 0;
 GLubyte green = 0;
@@ -29,6 +31,7 @@ float map_half_length ;
 int direction;
 int move_speed;
 int last_direction;
+int reset_val = 0;
 
 void grow(int value);
 void reset();
