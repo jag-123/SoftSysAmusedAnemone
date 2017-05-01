@@ -41,10 +41,11 @@ Our pipe screen saver is created with a pipe that grows incrementally around the
 
 For example, this is how we implemented our reset function: 
          
-         void reset(){
+         void reset(){    
               cout << "RESETING "<< reset_val << endl;
               reset_val += 1;
-              // keeps previous pipes on the screen
+
+              // adds the current pipe to the queue of all created pipes on the screen
               part_coords2.insert( part_coords2.end(), part_coords.begin(), part_coords.end() );
               for (int i=0; i<WIDTH+2; i++) {
                 for (int j=0; j<HEIGHT+2; j++) {
@@ -53,16 +54,15 @@ For example, this is how we implemented our reset function:
                   }
                 }
               }
-              for (int r=0; r<15; r++) {
-                red_array[r] += red;
-                green_array[r] += green;
-                blue_array[r] += blue;
-              }
 
               part_coords.clear();
               constructMap();
 
-              // glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
+              red = rand()%255;
+              green =rand()%255;
+              blue =rand()%255;
+
+              addColor();
 
               std::vector<float> point;
               int x = rand()%(int)(map_half_length*2);
@@ -119,7 +119,12 @@ This is an example of the code that we used to generate our pipe:
               part_coords.push_back(point);
               map[x+1][y+1][z+1]=1;
               
+Once the pipe has reached it's limit all of it's coordinates are added into a deque containing all of the coordinates that have been generated this round and the "current pipe" coordinates are cleared. This allows us to continue generating new pipes while still displaying old ones.
 
+This change over happens here:
+             
+               part_coords2.insert( part_coords2.end(), part_coords.begin(), part_coords.end() );
+               part_coords.clear();
 
 #### Error Checking
 When the pipe randomly chooses a direction to grow in, it must first check to see which surrounding coordinates are available. It does so by taking the last coordinate in the pipe queue, and checking the value of the surrounding x, y, and z directions. If that direction is available (is 0), it will add that direction to a vector of possible directions that the growing pipe will choose from. The direction vector contains 10 times as many options to continue growing in the direction that pipe is currently pointed, which mimics the choices made within the [Actuall Pipe Screensaver](https://www.youtube.com/watch?v=Uzx9ArZ7MUU). If this feature were removed, error checking and pipe generation could be combined to simplify the code.
