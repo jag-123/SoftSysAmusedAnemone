@@ -122,11 +122,11 @@ This is an example of the code that we used to generate our pipe:
 
 
 #### Error Checking
-When the pipe randomly chooses a direction to grow in, it must first check to see which surrounding coordinates are available. It does so by taking the last coordinate in the pipe queue, and checking the value of the surrounding x, y, and z directions. If that direction is available (is 0), it will add that direction to a vector of possible directions that the growing pipe will choose from. The direction vector contains 10 times as many options to continue growing in the direction that pipe is currently pointed, which mimics the choices made within the actualy [Pipe Screensaver](https://www.youtube.com/watch?v=Uzx9ArZ7MUU). If this feature were removed, error checking and pipe generation could be combined to simplify the code.
+When the pipe randomly chooses a direction to grow in, it must first check to see which surrounding coordinates are available. It does so by taking the last coordinate in the pipe queue, and checking the value of the surrounding x, y, and z directions. If that direction is available (is 0), it will add that direction to a vector of possible directions that the growing pipe will choose from. The direction vector contains 10 times as many options to continue growing in the direction that pipe is currently pointed, which mimics the choices made within the [Actuall Pipe Screensaver](https://www.youtube.com/watch?v=Uzx9ArZ7MUU). If this feature were removed, error checking and pipe generation could be combined to simplify the code.
 
 ## Results
 The following video is an example of our pipes screen saver in action.
 
-[Pipes Screen Saver](https://github.com/jag-123/SoftSysAmusedAnemone/)\
+[Pipes Screen Saver](https://github.com/jag-123/SoftSysAmusedAnemone/)
 
 ## Future Work
