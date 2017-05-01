@@ -299,7 +299,7 @@ void display(){
         y = part_coords[a][1];
         z = part_coords[a][2];
 
-        glTranslatef(x-(WIDTH+1)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
+        glTranslatef(x-(WIDTH-15)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
 
         //glutSolidSphere(12.0, 50, 50);
         if(map[x+1][y+1][z+1] == 2){
@@ -328,7 +328,7 @@ void display(){
         y = part_coords2[b][1];
         z = part_coords2[b][2];
 
-        glTranslatef(x-(WIDTH+15)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
+        glTranslatef(x-(WIDTH-15)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
 
         if(map2[x+1][y+1][z+1] == 2){
             glRotatef(90, 0.0f, 1.0f, 0.0f);
