@@ -10,6 +10,32 @@ This project was created for our Software Systems course. For this project, our 
 ## Background
 Going into this project, half of the team had not used C++ or OpenGL before and the other half had a reasonable amount of experience. Most of the background research that was done in preperation for this project consisted of online tutorials to get all of the members comfortable using OpenGL and a lot of experimentation with example code. The primary outcome of this research was knowledge of how OpenGL creates and displays objects and how it allows objects to change over time. We also learned a lot about how OpenGL programs tend to be structured and which functions act as the building blocks for their programs.
 
+Here is an example of how we used some of the GLUT library opengl functions:
+
+             //Initializing variables
+             title = "OpenGL Pipe";
+             map_half_length = 14.0f;
+             direction = 2;
+             move_speed = 25;
+             last_direction = 2;
+             screenW = 1920;
+             screenH = 1080;
+
+             //Init glut
+             glutInit(&argc, argv);
+             glutInitDisplayMode (GLUT_DOUBLE | GLUT_DEPTH);
+
+             glutInitWindowSize(screenW, screenH);
+             glutCreateWindow(title);
+             glutFullScreen();
+
+             //Set the glut functions
+             glutDisplayFunc(display);
+             glutReshapeFunc(reshape);
+             glutKeyboardFunc(processKeys);
+             glutSpecialFunc(processSpecial);
+             
+
 ***Provide context for your project by describing the broader space in which it is situated. This section will likely draw upon your annotated bibliography. You’ve already collected this knowledge and shown us you understand it, now frame it for an external audience.***
 
 ## Implementation
