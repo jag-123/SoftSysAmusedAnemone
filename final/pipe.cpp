@@ -12,14 +12,14 @@ int main(int argc, char** argv){
     //Initializing variables
     title = "OpenGL Pipe";
     direction = 2;
-    move_speed = 10;
+    move_speed = 25;
     last_direction = 2;
     screenW = 1920;
     screenH = 1080;
 
     //Init glut
     glutInit(&argc, argv);
-    glutInitDisplayMode (GLUT_DOUBLE | GLUT_DEPTH); 
+    glutInitDisplayMode (GLUT_DOUBLE | GLUT_DEPTH);
 
     glutInitWindowSize(screenW, screenH);
     glutCreateWindow(title);
@@ -35,6 +35,12 @@ int main(int argc, char** argv){
     red = rand()%255;
     green =rand()%255;
     blue =rand()%255;
+
+    std::vector<GLubyte> current_color;
+    current_color.push_back(red);
+    current_color.push_back(green);
+    current_color.push_back(blue);
+    color.push_back(current_color);
 
     vector<float> point;
     int x = rand()%(HEIGHT/2);
@@ -69,8 +75,12 @@ void grow(int value){
     */
     UNUSED(value);
 
-    if(part_coords.size() > 5000){
+    if(part_coords.size() > 200){
         reset();
+    }
+
+    if(part_coords2.size() > 2000) {
+      part_coords2.clear();
     }
 
     //Get the last coordinates
@@ -104,6 +114,7 @@ void grow(int value){
         return;
     }
 
+    // Add extra directions for the current direction to encourage moving forward
     for(int n:directions){
         if(n == last_direction){
             for(int i=0; i<10; i++){
@@ -115,6 +126,7 @@ void grow(int value){
     //Choose direction to move out of valid directions
     int direction = directions.at(rand()%directions.size());
 
+    //create a new point depending on that direction
     switch(direction){
         case 0:
             last_direction = 0;
@@ -154,7 +166,17 @@ void grow(int value){
             break;
     }
 
+    //add a value to the map where there is a pipe representing the direction
+    // that the pipe is moving
     map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]+1] = direction/2 + 1;
+
+    std::vector<GLubyte> current_color;
+
+    current_color.push_back(red);
+    current_color.push_back(green);
+    current_color.push_back(blue);
+    color.push_back(current_color);
+
 
     //Push the new head onto the coords
     part_coords.push_back(new_head);
@@ -165,21 +187,30 @@ void grow(int value){
 
 void reset(){
     cout << "RESETING "<< reset_val << endl;
-    /*reset_val += 1;
-    // keeps previous pipes on the screen
+    reset_val += 1;
+
+    // adds the current pipe to the queue of all created pipes on the screen
     part_coords2.insert( part_coords2.end(), part_coords.begin(), part_coords.end() );
-    for (int i=0; i<HEIGHT+2; i++) {
-      for (int j=0; j<WIDTH+2; j++) {
+    for (int i=0; i<WIDTH+2; i++) {
+      for (int j=0; j<HEIGHT+2; j++) {
         for (int k=0; k<DEPTH+2; k++) {
           map2[i][j][k] += map[i][j][k];
         }
       }
-    }*/
+    }
 
     part_coords.clear();
     constructMap();
 
-    // glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
+    red = rand()%255;
+    green =rand()%255;
+    blue =rand()%255;
+
+    std::vector<GLubyte> current_color;
+    current_color.push_back(red);
+    current_color.push_back(green);
+    current_color.push_back(blue);
+    color.push_back(current_color);
 
     vector<float> point;
     int x = rand()%(HEIGHT/2);
@@ -190,20 +221,14 @@ void reset(){
     point.push_back((float)z+1);
     map[x+1][y+1][z+1]=1;
     part_coords.push_back(point);
-
-    red = rand()%255;
-    green =rand()%255;
-    blue =rand()%255;
-
-    //glutTimerFunc(move_speed, grow, 0);
 }
 
 void constructMap(){
     /*
         Constructs the map with walls being 1 and all other space 0
     */
-    for(int row=0; row<HEIGHT+2; row++){
-        for(int col=0; col<WIDTH+2; col++){
+    for(int row=0; row<WIDTH+2; row++){
+        for(int col=0; col<HEIGHT+2; col++){
             for(int z=0; z<DEPTH+2; z++){
                 if(row==0 || col==0 || z==0){
                     map[row][col][z] = 1;
@@ -255,9 +280,9 @@ void display(){
     glMatrixMode(GL_MODELVIEW);
 
     /*UNCOMMENT NEXT THREE LINE FOR MELLOW PARTY MODE*/
-    /*red = rand()%255;
-    green =rand()%255;
-    blue =rand()%255;*/
+    // red = rand()%255;
+    // green =rand()%255;
+    // blue =rand()%255;
 
 
     for(unsigned int a = 0; a < part_coords.size(); a++){
@@ -268,13 +293,12 @@ void display(){
         // green =rand()%255;
         // blue =rand()%255;
 
-        glColor3ub(red, green, blue);
 
         x = part_coords[a][0];
         y = part_coords[a][1];
         z = part_coords[a][2];
 
-        glTranslatef(x-(WIDTH+1)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
+        glTranslatef(x-(WIDTH-15)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
 
         //glutSolidSphere(12.0, 50, 50);
         if(map[x+1][y+1][z+1] == 2){
@@ -285,6 +309,7 @@ void display(){
         }
 
         glBegin(GL_QUAD_STRIP);
+            glColor3ub(red, green, blue);
             GLfloat COSan_3 = 0.0;
             GLfloat SINan_3 = 0.0;
             for(GLfloat an = 0.0; an <= 2.0 * M_PI; an += M_PI / 12.0) {
@@ -294,16 +319,16 @@ void display(){
         }
         glEnd();
     }
-    /*for(unsigned int a = 0; a < part_coords2.size(); a++){
+    for(unsigned int b = 0; b < part_coords2.size(); b++){
         glLoadIdentity();
 
-        x = part_coords2[a][0];
-        y = part_coords2[a][1];
-        z = part_coords2[a][2];
 
-        glTranslatef(x-(WIDTH+1)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
+        x = part_coords2[b][0];
+        y = part_coords2[b][1];
+        z = part_coords2[b][2];
 
-        //glutSolidSphere(12.0, 50, 50);
+        glTranslatef(x-(WIDTH-15)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
+
         if(map2[x+1][y+1][z+1] == 2){
             glRotatef(90, 0.0f, 1.0f, 0.0f);
         }
@@ -312,14 +337,15 @@ void display(){
         }
 
         glBegin(GL_QUAD_STRIP);
+            glColor3ub(color.at(b)[0], color.at(b)[1], color.at(b)[2]);
             GLfloat COSan_3 = 0.0;
             GLfloat SINan_3 = 0.0;
             for(GLfloat an = 0.0; an <= 2.0 * M_PI; an += M_PI / 12.0) {
                         glNormal3f((COSan_3 = cos(an)/3.0), (SINan_3 = sin(an)/3.0), 2.0);
                         glVertex3f(COSan_3, SINan_3, 0.5f);
                         glVertex3f(COSan_3, SINan_3, -0.5f);
-        }
+            }
         glEnd();
-    }*/
+    }
     glutSwapBuffers();
 }

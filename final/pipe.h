@@ -26,6 +26,8 @@ GLubyte red = 0;
 GLubyte green = 0;
 GLubyte blue = 0;
 
+deque<vector<GLubyte>> color;
+
 int x, y, z;
 int screenH, screenW;
 vector<int> directions;
