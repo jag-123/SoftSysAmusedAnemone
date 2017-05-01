@@ -19,6 +19,32 @@ Our pipe screen saver is created with a pipe that grows incrementally around the
 ### Map Creation
 In order to grow the pipe, we first needed to create an environment for it to grow in. This took the form of a three-dimensional matrix of integers that was slightly larger than the screen. The map with all of the edges marked as 1 and everything within marked as 0. All places within the map that contain a pipe are marked with an integer according to the direction that the pipe should be facing.
 
+The code below illustrates how we implemented this part:
+             
+             /Get the last coordinates
+              int last_part = part_coords.size() - 1;
+              vector<float> new_head = part_coords[last_part];
+
+
+              if(map[(int)new_head[0]+1][(int)new_head[1]+2][(int)new_head[2]+1]==0){
+                  directions.push_back(0);
+              }
+              if(map[(int)new_head[0]+1][(int)new_head[1]][(int)new_head[2]+1]==0){
+                  directions.push_back(1);
+              }
+              if(map[(int)new_head[0]+2][(int)new_head[1]+1][(int)new_head[2]+1]==0){
+                  directions.push_back(2);
+              }
+              if(map[(int)new_head[0]][(int)new_head[1]+1][(int)new_head[2]+1]==0){
+                  directions.push_back(3);
+              }
+              if(map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]+2]==0){
+                  directions.push_back(4);
+              }
+              if(map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]]==0){
+                  directions.push_back(5);
+              }
+
 ### Pipe Generation
 Our pipe is made of a dequeue (double ended queue) that contains vectors representing coordinates where the pipe has been. The pipe begins at a random point and from there it grows according to the timer function. Each time it grows, the pipe randomly chooses a direction to go in and creates a new coordinate which is pushed onto the pipe dequeue. It also changes that point in the map from 0 to 1-3 (based on the direction the pipe should be facing). After this, a for loop goes through the pipe coordinates to draw and rotate a cylinder at each point.
 
