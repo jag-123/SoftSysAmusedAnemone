@@ -192,10 +192,11 @@ void reset(){
     map[x+1][y+1][z+1]=1;
 
     part_coords.push_back(point);
+    // count++;
 
-    red = rand()%255;
-    green =rand()%255;
-    blue =rand()%255;
+    // red = rand()%255;
+    // green =rand()%255;
+    // blue =rand()%255;
 
     //glutTimerFunc(move_speed, grow, 0);
 }
@@ -300,12 +301,23 @@ void display(){
         }
         glEnd();
     }
-    for(unsigned int a = 0; a < part_coords2.size(); a++){
+    for(unsigned int b = 0; b < part_coords2.size(); b++){
         glLoadIdentity();
 
-        x = part_coords2[a][0];
-        y = part_coords2[a][1];
-        z = part_coords2[a][2];
+
+        int c = b%500;
+        if (c == 0){
+            std::cout<<"HERE"<<std::endl;
+            std::cout<<c<<std::endl;
+            red = rand()%255;
+            blue = rand()%255;
+            green = rand()%255;
+            glColor3ub(red, blue, green);
+        }
+
+        x = part_coords2[b][0];
+        y = part_coords2[b][1];
+        z = part_coords2[b][2];
 
         glTranslatef(x-(WIDTH+1)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
 
