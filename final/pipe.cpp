@@ -32,9 +32,16 @@ int main(int argc, char** argv){
     glutKeyboardFunc(processKeys);
     glutSpecialFunc(processSpecial);
 
+    rand();
     red = rand()%255;
     green =rand()%255;
     blue =rand()%255;
+
+    std::vector<GLubyte> current_color;
+    current_color.push_back(red);
+    current_color.push_back(green);
+    current_color.push_back(blue);
+    color.push_back(current_color);
 
     vector<float> point;
     int x = rand()%(int)(map_half_length*2);
@@ -197,6 +204,16 @@ void reset(){
     part_coords.clear();
     constructMap();
 
+    red = rand()%255;
+    green =rand()%255;
+    blue =rand()%255;
+
+    std::vector<GLubyte> current_color;
+    current_color.push_back(red);
+    current_color.push_back(green);
+    current_color.push_back(blue);
+    color.push_back(current_color);
+
     std::vector<float> point;
     int x = rand()%(int)(map_half_length*2);
     point.push_back((float)x);
@@ -207,16 +224,6 @@ void reset(){
     map[x+1][y+1][z+1]=1;
 
     part_coords.push_back(point);
-
-    red = rand()%255;
-    green =rand()%255;
-    blue =rand()%255;
-
-    std::vector<GLubyte> current_color;
-    current_color.push_back(red);
-    current_color.push_back(green);
-    current_color.push_back(blue);
-    color.push_back(current_color);
 }
 
 void constructMap(){
@@ -321,7 +328,7 @@ void display(){
         y = part_coords2[b][1];
         z = part_coords2[b][2];
 
-        glTranslatef(x-(WIDTH+1)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
+        glTranslatef(x-(WIDTH+15)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
 
         if(map2[x+1][y+1][z+1] == 2){
             glRotatef(90, 0.0f, 1.0f, 0.0f);
@@ -338,7 +345,7 @@ void display(){
                         glNormal3f((COSan_3 = cos(an)/3.0), (SINan_3 = sin(an)/3.0), 2.0);
                         glVertex3f(COSan_3, SINan_3, 0.5f);
                         glVertex3f(COSan_3, SINan_3, -0.5f);
-        }
+            }
         glEnd();
     }
     glutSwapBuffers();
