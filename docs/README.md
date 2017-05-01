@@ -110,6 +110,6 @@ The following video is an example of our pipes screen saver in action.
 
 [Pipes Screen Saver](https://github.com/jag-123/SoftSysAmusedAnemone/)
 
-Provide evidence demonstrating that what you built works. Though the details will be different for each project, screenshots and video are likely helpful. Include graphs or other data if appropriate.
+***Provide evidence demonstrating that what you built works. Though the details will be different for each project, screenshots and video are likely helpful. Include graphs or other data if appropriate.***
 
 ## Future Work
