@@ -5,10 +5,10 @@
 We implemented a screen saver in C++ using OpenGL based on the [pipes screen saver](https://www.youtube.com/watch?v=Uzx9ArZ7MUU). View or download our code [here](https://github.com/jag-123/SoftSysAmusedAnemone/Pipe).
 
 ## Goals
-This project was created for our Software Systems course. For this project, our team was interested in implementing grpahics using OpenGL and C++. Creating a screensaver that was 3-dimensional and changed over time seemed like a perfect way to improve our skills and create something enjoyable for everyone. 
+This project was created for our Software Systems course. For this project, our team was interested in implementing graphics using OpenGL and C++. Creating a screensaver that was 3-dimensional and changed over time seemed like a perfect way to improve our skills and create something enjoyable for everyone. 
 
 ## Background
-Going into this project, half of the team had not used C++ or OpenGL before and the other half had a reasonable amount of experience. Most of the background research that was done in preperation for this project consisted of online tutorials to get all of the members comfortable using OpenGL and a lot of experimentation with example code. The primary outcome of this research was knowledge of how OpenGL creates and displays objects and how it allows obejcts to change over time. We also learned a lot about how OpenGL programs tend to be structured and which functions act as the building blocks for their programs.
+Going into this project, half of the team had not used C++ or OpenGL before and the other half had a reasonable amount of experience. Most of the background research that was done in preperation for this project consisted of online tutorials to get all of the members comfortable using OpenGL and a lot of experimentation with example code. The primary outcome of this research was knowledge of how OpenGL creates and displays objects and how it allows objects to change over time. We also learned a lot about how OpenGL programs tend to be structured and which functions act as the building blocks for their programs.
 
 ***Provide context for your project by describing the broader space in which it is situated. This section will likely draw upon your annotated bibliography. You’ve already collected this knowledge and shown us you understand it, now frame it for an external audience.***
 
