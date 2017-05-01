@@ -19,7 +19,6 @@ using namespace std;
 deque<vector<float>> part_coords;
 deque<vector<float>> part_coords2;
 int map[WIDTH+2][HEIGHT+2][DEPTH+2];
-int map2[WIDTH+2][HEIGHT+2][DEPTH+2];
 
 // Variables to store the color
 GLubyte red = 0;
