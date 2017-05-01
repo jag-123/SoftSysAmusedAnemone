@@ -109,6 +109,7 @@ void grow(int value){
         return;
     }
 
+    // Add extra directions for the current direction to encourage moving forward
     for(int n:directions){
         if(n == last_direction){
             for(int i=0; i<10; i++){
@@ -120,6 +121,7 @@ void grow(int value){
     //Choose direction to move out of valid directions
     int direction = directions.at(rand()%directions.size());
 
+    //create a new point depending on that direction
     switch(direction){
         case 0:
             last_direction = 0;
@@ -159,11 +161,22 @@ void grow(int value){
             break;
     }
 
+    //add a value to the map where there is a pipe representing the direction
+    // that the pipe is moving
     map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]+1] = direction/2 + 1;
+
+    std::vector<GLubyte> current_color;
+
+    current_color.push_back(red);
+    current_color.push_back(green);
+    current_color.push_back(blue);
+    color.push_back(current_color);
+
 
     //Push the new head onto the coords
     part_coords.push_back(new_head);
 
+    //clear directions and continue timing
     directions.clear();
     glutTimerFunc(move_speed, grow, 0);
 }
@@ -171,7 +184,8 @@ void grow(int value){
 void reset(){
     cout << "RESETING "<< reset_val << endl;
     reset_val += 1;
-    // keeps previous pipes on the screen
+
+    // adds the current pipe to the queue of all created pipes on the screen
     part_coords2.insert( part_coords2.end(), part_coords.begin(), part_coords.end() );
     for (int i=0; i<WIDTH+2; i++) {
       for (int j=0; j<HEIGHT+2; j++) {
@@ -180,16 +194,9 @@ void reset(){
         }
       }
     }
-    for (int r=0; r<15; r++) {
-      red_array[r] += red;
-      green_array[r] += green;
-      blue_array[r] += blue;
-    }
 
     part_coords.clear();
     constructMap();
-
-    // glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
 
     std::vector<float> point;
     int x = rand()%(int)(map_half_length*2);
@@ -201,13 +208,16 @@ void reset(){
     map[x+1][y+1][z+1]=1;
 
     part_coords.push_back(point);
-    // count++;
 
-    // red = rand()%255;
-    // green =rand()%255;
-    // blue =rand()%255;
+    red = rand()%255;
+    green =rand()%255;
+    blue =rand()%255;
 
-    //glutTimerFunc(move_speed, grow, 0);
+    std::vector<GLubyte> current_color;
+    current_color.push_back(red);
+    current_color.push_back(green);
+    current_color.push_back(blue);
+    color.push_back(current_color);
 }
 
 void constructMap(){
@@ -246,15 +256,9 @@ void processSpecial(int key, int x, int y){
 
 void initGL(){
     glEnable(GL_DEPTH_TEST);
-    // glEnable(GL_COLOR_MATERIAL);
-    // glEnable(GL_LIGHTING); //Enable lighting
-    // glEnable(GL_LIGHT0); //Enable light #0
-    // glEnable(GL_LIGHT1); //Enable light #1
-    // glEnable(GL_NORMALIZE); //Automatically normalize normals
     glMatrixMode(GL_PROJECTION);
     glDepthFunc(GL_LEQUAL);
     glShadeModel(GL_SMOOTH);
-    //gluPerspective(75.0f, 1, 0.0f, 35.0f);
     gluPerspective(75.0f, (float)screenW/screenH, 0.0f, 35.0f);
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -271,9 +275,9 @@ void display(){
     glMatrixMode(GL_MODELVIEW);
 
     /*UNCOMMENT NEXT THREE LINE FOR MELLOW PARTY MODE*/
-    /*red = rand()%255;
-    green =rand()%255;
-    blue =rand()%255;*/
+    // red = rand()%255;
+    // green =rand()%255;
+    // blue =rand()%255;
 
 
     for(unsigned int a = 0; a < part_coords.size(); a++){
@@ -284,7 +288,6 @@ void display(){
         // green =rand()%255;
         // blue =rand()%255;
 
-        glColor3ub(red, green, blue);
 
         x = part_coords[a][0];
         y = part_coords[a][1];
@@ -301,6 +304,7 @@ void display(){
         }
 
         glBegin(GL_QUAD_STRIP);
+            glColor3ub(red, green, blue);
             GLfloat COSan_3 = 0.0;
             GLfloat SINan_3 = 0.0;
             for(GLfloat an = 0.0; an <= 2.0 * M_PI; an += M_PI / 12.0) {
@@ -314,27 +318,12 @@ void display(){
         glLoadIdentity();
 
 
-        int c = b%500;
-        if (c == 0){
-            std::cout<<"HERE"<<std::endl;
-            std::cout<<c<<std::endl;
-            red = rand()%255;
-            blue = rand()%255;
-            green = rand()%255;
-            glColor3ub(red, blue, green);
-        }
-
         x = part_coords2[b][0];
         y = part_coords2[b][1];
         z = part_coords2[b][2];
 
         glTranslatef(x-(WIDTH+1)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
 
-        for (int i=0; i<15; i++) {
-          glColor3ub(red_array[i], green_array[i], blue_array[i]);
-        }
-
-        //glutSolidSphere(12.0, 50, 50);
         if(map2[x+1][y+1][z+1] == 2){
             glRotatef(90, 0.0f, 1.0f, 0.0f);
         }
@@ -343,6 +332,7 @@ void display(){
         }
 
         glBegin(GL_QUAD_STRIP);
+            glColor3ub(color.at(b)[0], color.at(b)[1], color.at(b)[2]);
             GLfloat COSan_3 = 0.0;
             GLfloat SINan_3 = 0.0;
             for(GLfloat an = 0.0; an <= 2.0 * M_PI; an += M_PI / 12.0) {

@@ -18,14 +18,14 @@ deque<vector<float>> part_coords2;
 vector<int> directions;
 int map[WIDTH+2][HEIGHT+2][DEPTH+2];
 int map2[WIDTH+2][HEIGHT+2][DEPTH+2];
+int i = 0;
+
 
 GLubyte red = 0;
 GLubyte green = 0;
 GLubyte blue = 0;
 
-GLubyte red_array[15];
-GLubyte green_array[15];
-GLubyte blue_array[15];
+deque<vector<GLubyte>> color;
 
 int x, y, z;
 int screenH, screenW;
