@@ -23,6 +23,7 @@ In order to grow the pipe, we first needed to create an environment for it to gr
 Our pipe is made of a dequeue (double ended queue) that contains vectors representing coordinates where the pipe has been. The pipe begins at a random point and from there it grows according to the timer function. Each time it grows, the pipe randomly chooses a direction to go in and creates a new coordinate which is pushed onto the pipe dequeue. It also changes that point in the map from 0 to 1-3 (based on the direction the pipe should be facing). After this, a for loop goes through the pipe coordinates to draw and rotate a cylinder at each point.
 
 Our pipe coordinates are contained in a dequeue because pipe growth is determine only based on the previous value in the pipe dequeue. Our pipe coordinates are housed in a vector becuase they do not need to change after they are created.
+
 This is an example of the code that we used to generate our pipe:
              
               vector<float> point;
