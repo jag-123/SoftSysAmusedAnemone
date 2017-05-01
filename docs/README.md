@@ -5,7 +5,7 @@
 We implemented a screen saver in C++ using OpenGL based on the [pipes screen saver](https://www.youtube.com/watch?v=Uzx9ArZ7MUU). View or download our code [here](https://github.com/jag-123/SoftSysAmusedAnemone/tree/master/final).
 
 ## Goals
-This project was created for our Software Systems course. For this project, our team was interested in implementing graphics using OpenGL and C++. Creating a screensaver that was 3-dimensional and changed over time seemed like a perfect way to improve our skills and create something enjoyable for everyone. 
+This project was created for our Software Systems course. For this project, our team was interested in implementing graphics using OpenGL and C++. Creating a screensaver that was 3-dimensional and changed over time seemed like a perfect way to improve our skills and create something enjoyable for everyone.
 
 ## Background
 Going into this project, half of the team had not used C++ or OpenGL before and the other half had a reasonable amount of experience. Most of the background research that was done in preperation for this project consisted of online tutorials to get all of the members comfortable using OpenGL and a lot of experimentation with example code. The primary outcome of this research was knowledge of how OpenGL creates and displays objects and how it allows objects to change over time. We also learned a lot about how OpenGL programs tend to be structured and which functions act as the building blocks for their programs.
@@ -39,8 +39,8 @@ Here is an example of how we used some of the GLUT library opengl functions:
 ### Overview
 Our pipe screen saver is created with a pipe that grows incrementally around the screen. Once it grows to contain a certain number of pipe units or it cannot grow any more (because it would hit itself otherwise), it stops growing and remains on the screen while more pipes continue to grow. After SOME pipes are created, the entire screen resets and it starts building again.
 
-For example, this is how we implemented our reset function: 
-         
+For example, this is how we implemented our reset function:
+
          void reset(){    
               cout << "RESETING "<< reset_val << endl;
               reset_val += 1;
@@ -108,7 +108,7 @@ Our pipe is made of a dequeue (double ended queue) that contains vectors represe
 Our pipe coordinates are contained in a dequeue because pipe growth is determine only based on the previous value in the pipe dequeue. Our pipe coordinates are housed in a vector because they do not need to change after they are created.
 
 This is an example of the code that we used to generate our pipe:
-             
+
               vector<float> point;
               int x = rand()%(int)(map_half_length*2);
               point.push_back((float)x);
@@ -118,11 +118,11 @@ This is an example of the code that we used to generate our pipe:
               point.push_back((float)z);
               part_coords.push_back(point);
               map[x+1][y+1][z+1]=1;
-              
+
 Once the pipe has reached it's limit all of it's coordinates are added into a deque containing all of the coordinates that have been generated this round and the "current pipe" coordinates are cleared. This allows us to continue generating new pipes while still displaying old ones.
 
 This change over happens here:
-             
+
                part_coords2.insert( part_coords2.end(), part_coords.begin(), part_coords.end() );
                part_coords.clear();
 
@@ -132,6 +132,6 @@ When the pipe randomly chooses a direction to grow in, it must first check to se
 ## Results
 The following video is an example of our pipes screen saver in action.
 
-[Pipes Screen Saver](https://github.com/jag-123/SoftSysAmusedAnemone/)
+[Pipes Screen Saver](https://github.com/jag-123/SoftSysAmusedAnemone/blob/master/videos/final.mp4)
 
 ## Future Work
