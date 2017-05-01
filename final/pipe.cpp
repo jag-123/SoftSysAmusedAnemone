@@ -36,12 +36,7 @@ int main(int argc, char** argv){
     red = rand()%255;
     green =rand()%255;
     blue =rand()%255;
-
-    std::vector<GLubyte> current_color;
-    current_color.push_back(red);
-    current_color.push_back(green);
-    current_color.push_back(blue);
-    color.push_back(current_color);
+    addColor();
 
     vector<float> point;
     int x = rand()%(int)(map_half_length*2);
@@ -83,6 +78,7 @@ void grow(int value){
 
     if(part_coords2.size() > 2000) {
       part_coords2.clear();
+      color.clear();
     }
 
     //Get the last coordinates
@@ -172,13 +168,7 @@ void grow(int value){
     // that the pipe is moving
     map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]+1] = direction/2 + 1;
 
-    std::vector<GLubyte> current_color;
-
-    current_color.push_back(red);
-    current_color.push_back(green);
-    current_color.push_back(blue);
-    color.push_back(current_color);
-
+    addColor();
 
     //Push the new head onto the coords
     part_coords.push_back(new_head);
@@ -193,26 +183,22 @@ void reset(){
 
     // adds the current pipe to the queue of all created pipes on the screen
     part_coords2.insert( part_coords2.end(), part_coords.begin(), part_coords.end() );
-    for (int i=0; i<WIDTH+2; i++) {
-      for (int j=0; j<HEIGHT+2; j++) {
-        for (int k=0; k<DEPTH+2; k++) {
-          map2[i][j][k] += map[i][j][k];
-        }
-      }
-    }
+    // for (int i=0; i<WIDTH+2; i++) {
+    //   for (int j=0; j<HEIGHT+2; j++) {
+    //     for (int k=0; k<DEPTH+2; k++) {
+    //       map2[i][j][k] += map[i][j][k];
+    //     }
+    //   }
+    // }
 
     part_coords.clear();
-    constructMap();
+    // constructMap();
 
     red = rand()%255;
     green =rand()%255;
     blue =rand()%255;
 
-    std::vector<GLubyte> current_color;
-    current_color.push_back(red);
-    current_color.push_back(green);
-    current_color.push_back(blue);
-    color.push_back(current_color);
+    addColor();
 
     std::vector<float> point;
     int x = rand()%(int)(map_half_length*2);
@@ -260,6 +246,14 @@ void processSpecial(int key, int x, int y){
     cout<<key<<endl;
 }
 
+void addColor(){
+    std::vector<GLubyte> current_color;
+    current_color.push_back(red);
+    current_color.push_back(green);
+    current_color.push_back(blue);
+    color.push_back(current_color);
+}
+
 void initGL(){
     glEnable(GL_DEPTH_TEST);
     glMatrixMode(GL_PROJECTION);
@@ -301,7 +295,6 @@ void display(){
 
         glTranslatef(x-(WIDTH-15)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
 
-        //glutSolidSphere(12.0, 50, 50);
         if(map[x+1][y+1][z+1] == 2){
             glRotatef(90, 0.0f, 1.0f, 0.0f);
         }
@@ -330,10 +323,10 @@ void display(){
 
         glTranslatef(x-(WIDTH-15)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
 
-        if(map2[x+1][y+1][z+1] == 2){
+        if(map[x+1][y+1][z+1] == 2){
             glRotatef(90, 0.0f, 1.0f, 0.0f);
         }
-        if(map2[x+1][y+1][z+1] == 1){
+        if(map[x+1][y+1][z+1] == 1){
             glRotatef(90, 1.0f, 0.0f, 0.0f);
         }
 

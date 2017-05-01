@@ -42,6 +42,7 @@ void reset();
 void constructMap();
 void processKeys(unsigned char key, int x, int y);
 void processSpecial(int key, int x, int y);
+void addColor();
 
 //Opengl functions
 void initGL();
