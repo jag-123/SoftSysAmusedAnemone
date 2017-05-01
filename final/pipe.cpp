@@ -245,7 +245,6 @@ void addColor(){
 
 void initGL(){
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_TEXTURE_2D);
     glMatrixMode(GL_PROJECTION);
     glDepthFunc(GL_LEQUAL);
     glShadeModel(GL_SMOOTH);
