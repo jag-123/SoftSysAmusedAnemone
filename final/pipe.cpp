@@ -316,8 +316,6 @@ void display(){
 
         int c = b%500;
         if (c == 0){
-            std::cout<<"HERE"<<std::endl;
-            std::cout<<c<<std::endl;
             red = rand()%255;
             blue = rand()%255;
             green = rand()%255;
