@@ -183,16 +183,7 @@ void reset(){
 
     // adds the current pipe to the queue of all created pipes on the screen
     part_coords2.insert( part_coords2.end(), part_coords.begin(), part_coords.end() );
-    // for (int i=0; i<WIDTH+2; i++) {
-    //   for (int j=0; j<HEIGHT+2; j++) {
-    //     for (int k=0; k<DEPTH+2; k++) {
-    //       map2[i][j][k] += map[i][j][k];
-    //     }
-    //   }
-    // }
-
     part_coords.clear();
-    // constructMap();
 
     red = rand()%255;
     green =rand()%255;
