@@ -74,6 +74,10 @@ void grow(int value){
         reset();
     }
 
+    if(part_coords2.size() > 2000) {
+      part_coords2.clear();
+    }
+
     //Get the last coordinates
     int last_part = part_coords.size() - 1;
     vector<float> new_head = part_coords[last_part];
@@ -176,6 +180,11 @@ void reset(){
         }
       }
     }
+    for (int r=0; r<15; r++) {
+      red_array[r] += red;
+      green_array[r] += green;
+      blue_array[r] += blue;
+    }
 
     part_coords.clear();
     constructMap();
@@ -205,8 +214,8 @@ void constructMap(){
     /*
         Constructs the map with walls being 1 and all other space 0
     */
-    for(int row=0; row<HEIGHT+2; row++){
-        for(int col=0; col<WIDTH+2; col++){
+    for(int row=0; row<WIDTH+2; row++){
+        for(int col=0; col<HEIGHT+2; col++){
             for(int z=0; z<DEPTH+2; z++){
                 if(row==0 || col==0 || z==0){
                     map[row][col][z] = 1;
@@ -320,6 +329,10 @@ void display(){
         z = part_coords2[b][2];
 
         glTranslatef(x-(WIDTH+1)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
+
+        for (int i=0; i<15; i++) {
+          glColor3ub(red_array[i], green_array[i], blue_array[i]);
+        }
 
         //glutSolidSphere(12.0, 50, 50);
         if(map2[x+1][y+1][z+1] == 2){

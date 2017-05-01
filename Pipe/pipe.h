@@ -23,7 +23,9 @@ GLubyte red = 0;
 GLubyte green = 0;
 GLubyte blue = 0;
 
-int count = 0;
+GLubyte red_array[15];
+GLubyte green_array[15];
+GLubyte blue_array[15];
 
 int x, y, z;
 int screenH, screenW;
