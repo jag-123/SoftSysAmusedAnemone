@@ -11,7 +11,6 @@ int main(int argc, char** argv){
 
     //Initializing variables
     title = "OpenGL Pipe";
-    map_half_length = 14.0f;
     direction = 2;
     move_speed = 10;
     last_direction = 2;
@@ -32,23 +31,23 @@ int main(int argc, char** argv){
     glutKeyboardFunc(processKeys);
     glutSpecialFunc(processSpecial);
 
+    rand(); //doesn't start with an ugly gray
     red = rand()%255;
     green =rand()%255;
     blue =rand()%255;
 
     vector<float> point;
-    int x = rand()%(int)(map_half_length*2);
-    point.push_back((float)x);
-    int y = rand()%(int)(map_half_length*2);
-    point.push_back((float)y);
-    int z = rand()%(int)(map_half_length*2);
-    point.push_back((float)z);
-    part_coords.push_back(point);
+    int x = rand()%(HEIGHT/2);
+    point.push_back((float)x+1);
+    int y = rand()%(WIDTH/2);
+    point.push_back((float)y+1);
+    int z = rand()%(DEPTH/2);
+    point.push_back((float)z+1);
     map[x+1][y+1][z+1]=1;
+    part_coords.push_back(point);
 
     srand(time(NULL));
     constructMap();
-
 
     initGL();
     glutTimerFunc(move_speed, grow, 0);
@@ -78,7 +77,7 @@ void grow(int value){
     int last_part = part_coords.size() - 1;
     vector<float> new_head = part_coords[last_part];
 
-
+    //Can move rigssss
     if(map[(int)new_head[0]+1][(int)new_head[1]+2][(int)new_head[2]+1]==0){
         directions.push_back(0);
     }
@@ -101,7 +100,7 @@ void grow(int value){
     //Reset if no valid directions
     if(directions.empty()){
         reset();
-        grow(1);
+        grow(0);
         return;
     }
 
@@ -166,7 +165,7 @@ void grow(int value){
 
 void reset(){
     cout << "RESETING "<< reset_val << endl;
-    reset_val += 1;
+    /*reset_val += 1;
     // keeps previous pipes on the screen
     part_coords2.insert( part_coords2.end(), part_coords.begin(), part_coords.end() );
     for (int i=0; i<HEIGHT+2; i++) {
@@ -175,22 +174,21 @@ void reset(){
           map2[i][j][k] += map[i][j][k];
         }
       }
-    }
+    }*/
 
     part_coords.clear();
     constructMap();
 
     // glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
 
-    std::vector<float> point;
-    int x = rand()%(int)(map_half_length*2);
-    point.push_back((float)x);
-    int y = rand()%(int)(map_half_length*2);
-    point.push_back((float)y);
-    int z = rand()%(int)(map_half_length*2);
-    point.push_back((float)z);
+    vector<float> point;
+    int x = rand()%(HEIGHT/2);
+    point.push_back((float)x+1);
+    int y = rand()%(WIDTH/2);
+    point.push_back((float)y+1);
+    int z = rand()%(DEPTH/2);
+    point.push_back((float)z+1);
     map[x+1][y+1][z+1]=1;
-
     part_coords.push_back(point);
 
     red = rand()%255;
@@ -230,23 +228,19 @@ void processKeys(unsigned char key, int x, int y){
             return;
     }
 }
+
 void processSpecial(int key, int x, int y){
     cout<<key<<endl;
 }
 
 void initGL(){
     glEnable(GL_DEPTH_TEST);
-    // glEnable(GL_COLOR_MATERIAL);
-    // glEnable(GL_LIGHTING); //Enable lighting
-    // glEnable(GL_LIGHT0); //Enable light #0
-    // glEnable(GL_LIGHT1); //Enable light #1
-    // glEnable(GL_NORMALIZE); //Automatically normalize normals
+    glEnable(GL_TEXTURE_2D);
     glMatrixMode(GL_PROJECTION);
     glDepthFunc(GL_LEQUAL);
     glShadeModel(GL_SMOOTH);
-    //gluPerspective(75.0f, 1, 0.0f, 35.0f);
-    gluPerspective(75.0f, (float)screenW/screenH, 0.0f, 35.0f);
 
+    gluPerspective(75.0f, (float)screenW/screenH, 0.0f, 35.0f);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
@@ -300,7 +294,7 @@ void display(){
         }
         glEnd();
     }
-    for(unsigned int a = 0; a < part_coords2.size(); a++){
+    /*for(unsigned int a = 0; a < part_coords2.size(); a++){
         glLoadIdentity();
 
         x = part_coords2[a][0];
@@ -326,6 +320,6 @@ void display(){
                         glVertex3f(COSan_3, SINan_3, -0.5f);
         }
         glEnd();
-    }
+    }*/
     glutSwapBuffers();
 }
