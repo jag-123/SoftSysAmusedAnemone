@@ -134,4 +134,3 @@ The following video is an example of our pipes screen saver in action.
 
 [Pipes Screen Saver](https://github.com/jag-123/SoftSysAmusedAnemone/blob/master/videos/final.mp4)
 
-## Future Work
