@@ -34,9 +34,6 @@ Here is an example of how we used some of the GLUT library opengl functions:
              glutReshapeFunc(reshape);
              glutKeyboardFunc(processKeys);
              glutSpecialFunc(processSpecial);
-             
-
-***Provide context for your project by describing the broader space in which it is situated. This section will likely draw upon your annotated bibliography. You’ve already collected this knowledge and shown us you understand it, now frame it for an external audience.***
 
 ## Implementation
 ### Overview
@@ -78,8 +75,6 @@ For example, this is how we implemented our reset function:
 
               part_coords.push_back(point);
           }
-
-
 
 ### Map Creation
 In order to grow the pipe, we first needed to create an environment for it to grow in. This took the form of a three-dimensional matrix of integers that was slightly larger than the screen. The map with all of the edges marked as 1 and everything within marked as 0. All places within the map that contain a pipe are marked with an integer according to the direction that the pipe should be facing.
@@ -129,13 +124,9 @@ This is an example of the code that we used to generate our pipe:
 #### Error Checking
 When the pipe randomly chooses a direction to grow in, it must first check to see which surrounding coordinates are available. It does so by taking the last coordinate in the pipe queue, and checking the value of the surrounding x, y, and z directions. If that direction is available (is 0), it will that direction to a vector of possible directions that the growing pipe will choose from. The direction vector contains 10 times as many options to continue growing in the direction that pipe is currently pointed, which mimics the choices made within the actualy Pipe Screensaver. If this feature were removed, error checking and pipe generation could be combined to simplify the code.
 
-***What specifically did you accomplish with this project? Within the context of the problem space, enumerate the potential options and explain why you chose what you did. Describe what makes it interesting/challenging, and how you overcame those challenges. Explain your implementation and design decisions with sufficient detail for a technical audience to understand it.***
-
 ## Results
 The following video is an example of our pipes screen saver in action.
 
-[Pipes Screen Saver](https://github.com/jag-123/SoftSysAmusedAnemone/)
-
-***Provide evidence demonstrating that what you built works. Though the details will be different for each project, screenshots and video are likely helpful. Include graphs or other data if appropriate.***
+[Pipes Screen Saver](https://github.com/jag-123/SoftSysAmusedAnemone/)\
 
 ## Future Work
