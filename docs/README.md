@@ -16,6 +16,45 @@ Going into this project, half of the team had not used C++ or OpenGL before and 
 ### Overview
 Our pipe screen saver is created with a pipe that grows incrementally around the screen. Once it grows to contain a certain number of pipe units or it cannot grow any more (because it would hit itself otherwise), it stops growing and remains on the screen while more pipes continue to grow. After SOME pipes are created, the entire screen resets and it starts building again.
 
+For example, this is how we implemented our reset function: 
+         
+         void reset(){
+              cout << "RESETING "<< reset_val << endl;
+              reset_val += 1;
+              // keeps previous pipes on the screen
+              part_coords2.insert( part_coords2.end(), part_coords.begin(), part_coords.end() );
+              for (int i=0; i<WIDTH+2; i++) {
+                for (int j=0; j<HEIGHT+2; j++) {
+                  for (int k=0; k<DEPTH+2; k++) {
+                    map2[i][j][k] += map[i][j][k];
+                  }
+                }
+              }
+              for (int r=0; r<15; r++) {
+                red_array[r] += red;
+                green_array[r] += green;
+                blue_array[r] += blue;
+              }
+
+              part_coords.clear();
+              constructMap();
+
+              // glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
+
+              std::vector<float> point;
+              int x = rand()%(int)(map_half_length*2);
+              point.push_back((float)x);
+              int y = rand()%(int)(map_half_length*2);
+              point.push_back((float)y);
+              int z = rand()%(int)(map_half_length*2);
+              point.push_back((float)z);
+              map[x+1][y+1][z+1]=1;
+
+              part_coords.push_back(point);
+          }
+
+
+
 ### Map Creation
 In order to grow the pipe, we first needed to create an environment for it to grow in. This took the form of a three-dimensional matrix of integers that was slightly larger than the screen. The map with all of the edges marked as 1 and everything within marked as 0. All places within the map that contain a pipe are marked with an integer according to the direction that the pipe should be facing.
 
