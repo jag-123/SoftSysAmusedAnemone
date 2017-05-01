@@ -2,7 +2,7 @@
 
 
 ## Overview
-We implemented a screen saver in C++ using OpenGL based on the [pipes screen saver](https://www.youtube.com/watch?v=Uzx9ArZ7MUU). View or download our code [here](https://github.com/jag-123/SoftSysAmusedAnemone/Pipe).
+We implemented a screen saver in C++ using OpenGL based on the [pipes screen saver](https://www.youtube.com/watch?v=Uzx9ArZ7MUU). View or download our code [here](https://github.com/jag-123/SoftSysAmusedAnemone/tree/master/final).
 
 ## Goals
 This project was created for our Software Systems course. For this project, our team was interested in implementing graphics using OpenGL and C++. Creating a screensaver that was 3-dimensional and changed over time seemed like a perfect way to improve our skills and create something enjoyable for everyone. 
