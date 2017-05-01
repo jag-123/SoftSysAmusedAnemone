@@ -176,7 +176,6 @@ void grow(int value){
     //Push the new head onto the coords
     part_coords.push_back(new_head);
 
-    //clear directions and continue timing
     directions.clear();
     glutTimerFunc(move_speed, grow, 0);
 }
