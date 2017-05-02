@@ -62,26 +62,26 @@ In order to grow the pipe, we first needed to create an environment for it to gr
 
 This is the constructor map function:
 
-                  void constructMap(){
-                      /*
-                          Constructs the map with walls being 1 and all other space 0
-                      */
-                      for(int row=0; row<WIDTH+2; row++){
-                          for(int col=0; col<HEIGHT+2; col++){
-                              for(int z=0; z<DEPTH+2; z++){
-                                  if(row==0 || col==0 || z==0){
-                                      map[row][col][z] = 1;
-                                  }
-                                  else if(row==HEIGHT+1 || col==WIDTH+1 || z==DEPTH+1){
-                                      map[row][col][z] = 1;
-                                  }
-                                  else{
-                                      map[row][col][z] = 0;
-                                  }
-                              }
-                          }
+      void constructMap(){
+          /*
+              Constructs the map with walls being 1 and all other space 0
+          */
+          for(int row=0; row<WIDTH+2; row++){
+              for(int col=0; col<HEIGHT+2; col++){
+                  for(int z=0; z<DEPTH+2; z++){
+                      if(row==0 || col==0 || z==0){
+                          map[row][col][z] = 1;
+                      }
+                      else if(row==HEIGHT+1 || col==WIDTH+1 || z==DEPTH+1){
+                          map[row][col][z] = 1;
+                      }
+                      else{
+                          map[row][col][z] = 0;
                       }
                   }
+              }
+          }
+      }
 
 ### Pipe Generation
 Our pipe is made of a dequeue (double ended queue) that contains vectors representing coordinates where the pipe has been. The pipe begins at a random point and from there it grows according to the timer function. Each time it grows, the pipe randomly chooses a direction to go in and creates a new coordinate which is pushed onto the pipe dequeue. It also changes that point in the map from 0 to 1-3 (based on the direction the pipe should be facing). After this, a for loop goes through the pipe coordinates to draw and rotate a cylinder at each point.
