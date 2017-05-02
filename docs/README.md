@@ -135,5 +135,5 @@ In order to get each pipe to be a different color even while another pipe was gr
 ## Results
 The following video is an example of our pipes screen saver in action.
 
-[Pipes Screen Saver](https://github.com/jag-123/SoftSysAmusedAnemone/blob/master/videos/final.mp4)
+[Pipes Screen Saver](https://www.youtube.com/watch?v=aWCM1NLJ_yE&feature=youtu.be)
 
