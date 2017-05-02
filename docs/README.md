@@ -12,28 +12,18 @@ Going into this project, half of the team had not used C++ or OpenGL before and 
 
 Here is an example of how we used some of the GLUT library opengl functions:
 
-             //Initializing variables
-             title = "OpenGL Pipe";
-             map_half_length = 14.0f;
-             direction = 2;
-             move_speed = 25;
-             last_direction = 2;
-             screenW = 1920;
-             screenH = 1080;
+    //Init glut
+    glutInit(&argc, argv);
+    glutInitDisplayMode (GLUT_DOUBLE | GLUT_DEPTH);
+    glutInitWindowSize(screenW, screenH);
+    glutCreateWindow("Pipe Screensaver");
+    glutFullScreen();
 
-             //Init glut
-             glutInit(&argc, argv);
-             glutInitDisplayMode (GLUT_DOUBLE | GLUT_DEPTH);
-
-             glutInitWindowSize(screenW, screenH);
-             glutCreateWindow(title);
-             glutFullScreen();
-
-             //Set the glut functions
-             glutDisplayFunc(display);
-             glutReshapeFunc(reshape);
-             glutKeyboardFunc(processKeys);
-             glutSpecialFunc(processSpecial);
+    //Set the glut functions
+    glutDisplayFunc(display);
+    glutReshapeFunc(reshape);
+    glutKeyboardFunc(processKeys);
+    glutTimerFunc(MOVE_SPEED, grow, 0);
 
 ## Implementation
 ### Overview
@@ -41,66 +31,57 @@ Our pipe screensaver is created with a pipe that grows incrementally around the 
 
 For example, this is how we implemented our reset function:
 
-         void reset(){    
-              cout << "RESETING "<< reset_val << endl;
-              reset_val += 1;
+    void reset(){
+        resetVal += 1;
 
-              // adds the current pipe to the queue of all created pipes on the screen
-              part_coords2.insert( part_coords2.end(), part_coords.begin(), part_coords.end() );
-              for (int i=0; i<WIDTH+2; i++) {
-                for (int j=0; j<HEIGHT+2; j++) {
-                  for (int k=0; k<DEPTH+2; k++) {
-                    map2[i][j][k] += map[i][j][k];
-                  }
-                }
-              }
+        //Adds the current pipe to the queue of all created pipes on the screen
+        partCoords2.insert( partCoords2.end(), partCoords.begin(), partCoords.end() );
+        partCoords.clear();
 
-              part_coords.clear();
-              constructMap();
+        //New color
+        red = rand()%255;
+        green =rand()%255;
+        blue =rand()%255;
 
-              red = rand()%255;
-              green =rand()%255;
-              blue =rand()%255;
+        addColor();
 
-              addColor();
-
-              std::vector<float> point;
-              int x = rand()%(int)(map_half_length*2);
-              point.push_back((float)x);
-              int y = rand()%(int)(map_half_length*2);
-              point.push_back((float)y);
-              int z = rand()%(int)(map_half_length*2);
-              point.push_back((float)z);
-              map[x+1][y+1][z+1]=1;
-
-              part_coords.push_back(point);
-          }
+        //Create a new pipe start
+        vector<float> point;
+        int x = rand()%(HEIGHT/2);
+        point.push_back((float)x+1);
+        int y = rand()%(WIDTH/2);
+        point.push_back((float)y+1);
+        int z = rand()%(DEPTH/2);
+        point.push_back((float)z+1);
+        map[x+1][y+1][z+1]=1;
+        partCoords.push_back(point);
+    }
 
 ### Map Creation
 In order to grow the pipe, we first needed to create an environment for it to grow in. This took the form of a three-dimensional matrix of integers that was slightly larger than the screen. The map with all of the edges marked as 1 and everything within marked as 0. All places within the map that contain a pipe are marked with an integer according to the direction that the pipe should be facing.
 
 This is the constructor map function:
 
-                  void constructMap(){
-                      /*
-                          Constructs the map with walls being 1 and all other space 0
-                      */
-                      for(int row=0; row<WIDTH+2; row++){
-                          for(int col=0; col<HEIGHT+2; col++){
-                              for(int z=0; z<DEPTH+2; z++){
-                                  if(row==0 || col==0 || z==0){
-                                      map[row][col][z] = 1;
-                                  }
-                                  else if(row==HEIGHT+1 || col==WIDTH+1 || z==DEPTH+1){
-                                      map[row][col][z] = 1;
-                                  }
-                                  else{
-                                      map[row][col][z] = 0;
-                                  }
-                              }
-                          }
+      void constructMap(){
+          /*
+              Constructs the map with walls being 1 and all other space 0
+          */
+          for(int row=0; row<WIDTH+2; row++){
+              for(int col=0; col<HEIGHT+2; col++){
+                  for(int z=0; z<DEPTH+2; z++){
+                      if(row==0 || col==0 || z==0){
+                          map[row][col][z] = 1;
+                      }
+                      else if(row==HEIGHT+1 || col==WIDTH+1 || z==DEPTH+1){
+                          map[row][col][z] = 1;
+                      }
+                      else{
+                          map[row][col][z] = 0;
                       }
                   }
+              }
+          }
+      }
 
 ### Pipe Generation
 Our pipe is made of a dequeue (double ended queue) that contains vectors representing coordinates where the pipe has been. The pipe begins at a random point and from there it grows according to the timer function. Each time it grows, the pipe randomly chooses a direction to go in and creates a new coordinate which is pushed onto the pipe dequeue. It also changes that point in the map from 0 to 1-3 (based on the direction the pipe should be facing). After this, a for loop goes through the pipe coordinates to draw and rotate a cylinder at each point.
@@ -109,22 +90,22 @@ Our pipe coordinates are contained in a dequeue because pipe growth is determine
 
 This is an example of the code that we used to generate our pipe:
 
-              vector<float> point;
-              int x = rand()%(int)(map_half_length*2);
-              point.push_back((float)x);
-              int y = rand()%(int)(map_half_length*2);
-              point.push_back((float)y);
-              int z = rand()%(int)(map_half_length*2);
-              point.push_back((float)z);
-              part_coords.push_back(point);
-              map[x+1][y+1][z+1]=1;
+        vector<float> point;
+        int x = rand()%(HEIGHT/2);
+        point.push_back((float)x+1);
+        int y = rand()%(WIDTH/2);
+        point.push_back((float)y+1);
+        int z = rand()%(DEPTH/2);
+        point.push_back((float)z+1);
+        map[x+1][y+1][z+1]=1;
+        partCoords.push_back(point);
 
 Once the pipe has reached it's limit all of it's coordinates are added into a deque containing all of the coordinates that have been generated this round and the "current pipe" coordinates are cleared. This allows us to continue generating new pipes while still displaying old ones.
 
 This change over happens here:
 
-               part_coords2.insert( part_coords2.end(), part_coords.begin(), part_coords.end() );
-               part_coords.clear();
+    partCoords2.insert( partCoords2.end(), partCoords.begin(), partCoords.end() );
+    partCoords.clear();
 
 #### Error Checking
 When the pipe randomly chooses a direction to grow in, it must first check to see which surrounding coordinates are available. It does so by taking the last coordinate in the pipe queue, and checking the value of the surrounding x, y, and z directions. If that direction is available (is 0), it will add that direction to a vector of possible directions that the growing pipe will choose from. The direction vector contains 10 times as many options to continue growing in the direction that pipe is currently pointed, which mimics the choices made within the [Actuall Pipe Screensaver](https://www.youtube.com/watch?v=Uzx9ArZ7MUU). If this feature were removed, error checking and pipe generation could be combined to simplify the code.

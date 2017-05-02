@@ -28,8 +28,6 @@ To get started, you will need to have GLUT installed on your machine:
 
 2. A new screen should appear that displays one growing pipe. Once that pipe can no longer grow or reaches a size of 200 segments, a new pipe will begin to generate. Each pipe is a different color and the different pipes will not run into each other. Pipe creation will continue until 10 pipes are created.
 
-    a. To take the pipe into ***Party Mode*** uncomment lines _____ through _______.
-
 3. There are no required input or output files.
 
 ## License
