@@ -1,42 +1,41 @@
 #include <ctime>
 #include <deque>
 #include <GL/glut.h>
-#include <unistd.h>
-#include <iostream>
 #include <algorithm>
 #include "pipe.h"
+
+#define MOVE_SPEED 25
+
 using namespace std;
 
 int main(int argc, char** argv){
-
-    //Initializing variables
-    title = "OpenGL Pipe";
-    direction = 2;
-    move_speed = 25;
-    last_direction = 2;
-    screenW = 1920;
-    screenH = 1080;
+    //Seeding the random generator
+    srand(time(NULL));
 
     //Init glut
     glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_DEPTH);
-
     glutInitWindowSize(screenW, screenH);
-    glutCreateWindow(title);
+    glutCreateWindow("Pipe Screensaver");
     glutFullScreen();
 
     //Set the glut functions
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
     glutKeyboardFunc(processKeys);
-    glutSpecialFunc(processSpecial);
+    glutTimerFunc(MOVE_SPEED, grow, 0);
 
-    rand(); //doesn't start with an ugly gray
+    //Initializing direction
+    direction = rand()%6;
+    lastDirection = direction;
+
+    //Initializing color
     red = rand()%255;
     green =rand()%255;
     blue =rand()%255;
     addColor();
 
+    //Add the first point
     vector<float> point;
     int x = rand()%(HEIGHT/2);
     point.push_back((float)x+1);
@@ -45,20 +44,33 @@ int main(int argc, char** argv){
     int z = rand()%(DEPTH/2);
     point.push_back((float)z+1);
     map[x+1][y+1][z+1]=1;
-    part_coords.push_back(point);
+    partCoords.push_back(point);
 
-    srand(time(NULL));
+    //Construct the map
     constructMap();
 
+    //Init opengl and start the mainloop
     initGL();
-    glutTimerFunc(move_speed, grow, 0);
     glutMainLoop();
-
-    delete title;
     return 0;
 }
 
 void grow(int value){
+    UNUSED(value);
+
+    if(partCoords.size() > 200){
+        reset();
+    }
+
+    if(partCoords2.size() > 2000) {
+      partCoords2.clear();
+      color.clear();
+    }
+
+    //Get the last coordinates
+    int last_part = partCoords.size() - 1;
+    vector<float> newHead = partCoords[last_part];
+
     /*
         Directions:
         0 - up
@@ -68,38 +80,24 @@ void grow(int value){
         4 - out
         5 - in
     */
-    UNUSED(value);
 
-    if(part_coords.size() > 200){
-        reset();
-    }
-
-    if(part_coords2.size() > 2000) {
-      part_coords2.clear();
-      color.clear();
-    }
-
-    //Get the last coordinates
-    int last_part = part_coords.size() - 1;
-    vector<float> new_head = part_coords[last_part];
-
-    //Can move rigssss
-    if(map[(int)new_head[0]+1][(int)new_head[1]+2][(int)new_head[2]+1]==0){
+    //Checks valid moves and adds them to the queue
+    if(map[(int)newHead[0]+1][(int)newHead[1]+2][(int)newHead[2]+1]==0){
         directions.push_back(0);
     }
-    if(map[(int)new_head[0]+1][(int)new_head[1]][(int)new_head[2]+1]==0){
+    if(map[(int)newHead[0]+1][(int)newHead[1]][(int)newHead[2]+1]==0){
         directions.push_back(1);
     }
-    if(map[(int)new_head[0]+2][(int)new_head[1]+1][(int)new_head[2]+1]==0){
+    if(map[(int)newHead[0]+2][(int)newHead[1]+1][(int)newHead[2]+1]==0){
         directions.push_back(2);
     }
-    if(map[(int)new_head[0]][(int)new_head[1]+1][(int)new_head[2]+1]==0){
+    if(map[(int)newHead[0]][(int)newHead[1]+1][(int)newHead[2]+1]==0){
         directions.push_back(3);
     }
-    if(map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]+2]==0){
+    if(map[(int)newHead[0]+1][(int)newHead[1]+1][(int)newHead[2]+2]==0){
         directions.push_back(4);
     }
-    if(map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]]==0){
+    if(map[(int)newHead[0]+1][(int)newHead[1]+1][(int)newHead[2]]==0){
         directions.push_back(5);
     }
 
@@ -110,85 +108,71 @@ void grow(int value){
         return;
     }
 
-    // Add extra directions for the current direction to encourage moving forward
+    //Weight the current direction to encourage moving in the same
+    //direction if that is a valid direction
     for(int n:directions){
-        if(n == last_direction){
+        if(n == lastDirection){
             for(int i=0; i<10; i++){
-                directions.push_back(last_direction);
+                directions.push_back(lastDirection);
             }
         }
     }
 
     //Choose direction to move out of valid directions
     int direction = directions.at(rand()%directions.size());
+    lastDirection = direction;
 
-    //create a new point depending on that direction
+    //Choose direction to move out of valid directions
+    //and modify the new head depending on that direction
     switch(direction){
         case 0:
-            last_direction = 0;
-            new_head[0] = new_head[0];
-            new_head[1] = new_head[1]+1;
-            new_head[2] = new_head[2];
+            newHead[1]++;
             break;
         case 1:
-            last_direction = 1;
-            new_head[0] = new_head[0];
-            new_head[1] = new_head[1]-1;
-            new_head[2] = new_head[2];
+            newHead[1]--;
             break;
         case 2:
-            last_direction = 2;
-            new_head[0] = new_head[0]+1;
-            new_head[1] = new_head[1];
-            new_head[2] = new_head[2];
+            newHead[0]++;
             break;
          case 3:
-            last_direction = 3;
-            new_head[0] = new_head[0]-1;
-            new_head[1] = new_head[1];
-            new_head[2] = new_head[2];
+            newHead[0]--;
             break;
         case 4:
-            last_direction = 4;
-            new_head[0] = new_head[0];
-            new_head[1] = new_head[1];
-            new_head[2] = new_head[2]+1;
+            newHead[2]++;
             break;
         case 5:
-            last_direction = 5;
-            new_head[0] = new_head[0];
-            new_head[1] = new_head[1];
-            new_head[2] = new_head[2]-1;
+            newHead[2]--;
             break;
     }
 
-    //add a value to the map where there is a pipe representing the direction
-    // that the pipe is moving
-    map[(int)new_head[0]+1][(int)new_head[1]+1][(int)new_head[2]+1] = direction/2 + 1;
+    //Add a value to the map where there is a pipe representing the direction
+    //that the pipe is moving
+    map[(int)newHead[0]+1][(int)newHead[1]+1][(int)newHead[2]+1] = direction/2 + 1;
 
     addColor();
 
     //Push the new head onto the coords
-    part_coords.push_back(new_head);
+    partCoords.push_back(newHead);
 
     directions.clear();
-    glutTimerFunc(move_speed, grow, 0);
+    glutTimerFunc(MOVE_SPEED, grow, 0);
 }
 
 void reset(){
-    cout << "RESETING "<< reset_val << endl;
-    reset_val += 1;
+    resetVal += 1;
 
-    // adds the current pipe to the queue of all created pipes on the screen
-    part_coords2.insert( part_coords2.end(), part_coords.begin(), part_coords.end() );
-    part_coords.clear();
+    //Adds the current pipe to the queue of all created pipes on the screen
+    partCoords2.insert( partCoords2.end(), partCoords.begin(), partCoords.end() );
+    partCoords.clear();
 
+    //New color
     red = rand()%255;
     green =rand()%255;
     blue =rand()%255;
 
     addColor();
 
+    //Create a new pipe start
     vector<float> point;
     int x = rand()%(HEIGHT/2);
     point.push_back((float)x+1);
@@ -197,7 +181,7 @@ void reset(){
     int z = rand()%(DEPTH/2);
     point.push_back((float)z+1);
     map[x+1][y+1][z+1]=1;
-    part_coords.push_back(point);
+    partCoords.push_back(point);
 }
 
 void constructMap(){
@@ -231,12 +215,8 @@ void processKeys(unsigned char key, int x, int y){
     }
 }
 
-void processSpecial(int key, int x, int y){
-    cout<<key<<endl;
-}
-
 void addColor(){
-    std::vector<GLubyte> current_color;
+    vector<GLubyte> current_color;
     current_color.push_back(red);
     current_color.push_back(green);
     current_color.push_back(blue);
@@ -268,16 +248,18 @@ void display(){
     // green =rand()%255;
     // blue =rand()%255;
 
-    for(unsigned int b = 0; b < part_coords2.size(); b++){
+    int x, y, z;
+    for(unsigned int b = 0; b < partCoords2.size(); b++){
         glLoadIdentity();
 
-
-        x = part_coords2[b][0];
-        y = part_coords2[b][1];
-        z = part_coords2[b][2];
+        //Get the current part coordinates
+        x = partCoords2[b][0];
+        y = partCoords2[b][1];
+        z = partCoords2[b][2];
 
         glTranslatef(x-(WIDTH-15)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
 
+        //Rotate based on direction that the pipe should be facing
         if(map[x+1][y+1][z+1] == 2){
             glRotatef(90, 0.0f, 1.0f, 0.0f);
         }
@@ -285,6 +267,7 @@ void display(){
             glRotatef(90, 1.0f, 0.0f, 0.0f);
         }
 
+        //Draw the pipe
         glBegin(GL_QUAD_STRIP);
             glColor3ub(color.at(b)[0], color.at(b)[1], color.at(b)[2]);
             GLfloat COSan_3 = 0.0;
@@ -296,7 +279,7 @@ void display(){
             }
         glEnd();
     }
-    for(unsigned int a = 0; a < part_coords.size(); a++){
+    for(unsigned int a = 0; a < partCoords.size(); a++){
         glLoadIdentity();
 
         /*UNCOMMENT NEXT THREE LINE FOR FULL PARTY MODE*/
@@ -304,11 +287,12 @@ void display(){
         // green =rand()%255;
         // blue =rand()%255;
 
+        //Get the current part coordinates
+        x = partCoords[a][0];
+        y = partCoords[a][1];
+        z = partCoords[a][2];
 
-        x = part_coords[a][0];
-        y = part_coords[a][1];
-        z = part_coords[a][2];
-
+        //Rotate based on direction that the pipe should be facing
         glTranslatef(x-(WIDTH-15)/2, -y+(HEIGHT+1)/2, z-2*DEPTH);
 
         if(map[x+1][y+1][z+1] == 2){
@@ -318,6 +302,7 @@ void display(){
             glRotatef(90, 1.0f, 0.0f, 0.0f);
         }
 
+        //Draw the pipe
         glBegin(GL_QUAD_STRIP);
             glColor3ub(red, green, blue);
             GLfloat COSan_3 = 0.0;
