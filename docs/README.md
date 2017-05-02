@@ -2,7 +2,7 @@
 
 
 ## Overview
-We implemented a screen saver in C++ using OpenGL based on the [pipes screen saver](https://www.youtube.com/watch?v=Uzx9ArZ7MUU). View or download our code [here](https://github.com/jag-123/SoftSysAmusedAnemone/tree/master/final).
+We implemented a screensaver in C++ using OpenGL based on the [pipes screensaver](https://www.youtube.com/watch?v=Uzx9ArZ7MUU). View or download our code [here](https://github.com/jag-123/SoftSysAmusedAnemone/tree/master/final).
 
 ## Goals
 This project was created for our Software Systems course. For this project, our team was interested in implementing graphics using OpenGL and C++. Creating a screensaver that was 3-dimensional and changed over time seemed like a perfect way to improve our skills and create something enjoyable for everyone.
@@ -37,7 +37,7 @@ Here is an example of how we used some of the GLUT library opengl functions:
 
 ## Implementation
 ### Overview
-Our pipe screen saver is created with a pipe that grows incrementally around the screen. Once it grows to contain a certain number of pipe units or it cannot grow any more (because it would hit itself otherwise), it stops growing and remains on the screen while more pipes continue to grow. After SOME pipes are created, the entire screen resets and it starts building again.
+Our pipe screensaver is created with a pipe that grows incrementally around the screen. Once it grows to contain a certain number of pipe units or it cannot grow any more (because it would hit itself otherwise), it stops growing and remains on the screen while more pipes continue to grow. After SOME pipes are created, the entire screen resets and it starts building again.
 
 For example, this is how we implemented our reset function:
 
